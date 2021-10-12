@@ -1,6 +1,6 @@
 L'objectif de ce TP est l'implémentation de [l'algorithme du jour du jugement dernier de John Conway](https://fr.wikipedia.org/wiki/Algorithme_du_jour_du_Jugement_dernier).
 
-Seules les dates à partir de l'année 1583 (première année complète du calendrier grégorien)seront prises en charge.
+Seules les dates à partir de l'année 1583 (première année complète du calendrier grégorien) seront prises en charge.
 
 ## Saisie de la date
 
@@ -11,7 +11,7 @@ Puis vous devrez vérifier :
 - Que l'input suit correctement le format "YYYY-MM-dd"
 - Que la date est postérieure à 1583 et existe
 
-Lorsque l'utilisateur commmet une erreur de saisie, vous devez lui expliquer laquelle.
+Lorsque l'utilisateur commet une erreur de saisie, vous devez lui expliquer laquelle.
 
 Pour simplifier les tests, votre fonction de validation devra se trouver dans le fichier `doomsday/date.py` et se nommer `is_valid_date()`.
 
@@ -33,7 +33,7 @@ Pour simplifier les tests, votre fonction de calcul devra se trouver dans le fic
 
 ### Comment tester ?
 
-Comme pour la date, mais avec le fichier `test-algorithm
+Comme pour la date, mais avec le fichier `test-algorithm.py`
 
 ## Pour rendre ce TP
 
