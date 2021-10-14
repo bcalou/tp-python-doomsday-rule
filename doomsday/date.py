@@ -7,7 +7,7 @@ def is_valid_year(target_date: str) -> bool:
     year: str = target_date[0:4]
     for char in year:
         if char.isnumeric() == False:
-            print("Un ou plusieurs caractères ne sont pas des chiffres dans la date")
+            print("Erreur : Un ou plusieurs caractères ne sont pas des chiffres dans l'année")
             return False
     return int(year) > 1583
 
@@ -15,7 +15,7 @@ def is_valid_month(target_date: str) -> bool:
     month: str = target_date[5:7]
     for char in target_date[5:7]:
         if char.isnumeric() == False:
-            print("Un ou plusieurs caractères ne sont pas des chiffres dans le mois")
+            print("Erreur : Un ou plusieurs caractères ne sont pas des chiffres dans le mois")
             return False
     return int(month) <= 12
     
@@ -23,11 +23,12 @@ def is_valid_day(target_date: str) -> bool:
     day: str = target_date[8:]
     for char in day:
         if char.isnumeric() == False:
-            print("Un ou plusieurs caractères ne sont pas des chiffres dans le jour")
+            print("Erreur : Un ou plusieurs caractères ne sont pas des chiffres dans le jour")
             return False
     return int(day) <= 31 if day[0] != 0 else True
 
 def is_valid_format(target_date: str) -> bool:
+    print("Erreur : La date n'est pas au bon format")
     return target_date[4] == "-" and target_date[7] == "-"
 
 def is_leap_year(year: str) -> bool:
@@ -48,4 +49,3 @@ def has_right_number_of_day(target_date: str) -> bool:
         return int(day) <= 30 if day[0] != 0 else True
     else:
         return int(day) <= 31 if day[0] != 0 else True
-    return False
