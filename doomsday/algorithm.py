@@ -9,18 +9,18 @@ def pair(number):
 def get_year_day(year: int) -> int:
     """ Returns the anchor day name for a year (0 for sunday, 1 for monday, etc...) """
     century_tag: int = get_century_tag(year)
-    res: int = year % 100
-    if not pair(res):
-        res += 11
-    res //= 2
-    if not pair(res):
-        res += 11
+    anchor: int = year % 100
+    if not pair(anchor):
+        anchor += 11
+    anchor //= 2
+    if not pair(anchor):
+        anchor += 11
     cpt: int = 0
-    while (cpt + res) % 7 != 0:
+    while (cpt + anchor) % 7 != 0:
         cpt += 1
-    res = cpt + century_tag
-    res = res % 7
-    return res
+    anchor = cpt + century_tag
+    anchor = anchor % 7
+    return anchor
 
 
 def get_anchoring_day(year: int, month: int) -> int:
