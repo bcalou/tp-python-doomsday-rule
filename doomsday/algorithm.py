@@ -63,7 +63,7 @@ def anchor_day(year) :
     for i in range(0, 10) :
         if((7*i)>=y) :
             day_number=int(7*i-y+century(year))
-            break
+            break 
     if (day_number>6) :
         day_number=day_number-7
     for index, j in enumerate(DAYS) :
