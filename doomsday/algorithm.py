@@ -1,23 +1,25 @@
 import math
 
+from .common import is_leap_year
 
-def pair(number):
-    """Returns True if the number is pair"""
+
+def is_even(number: int) -> bool:
+    """Returns True if the number is even"""
     return number % 2 == 0
 
 
 def get_year_day(year: int) -> int:
     """ Returns the anchor day name for a year (0 for sunday, 1 for monday, etc...) """
     century_tag: int = get_century_tag(year)
+
+    # Calculates the anchor day
     anchor: int = year % 100
-    if not pair(anchor):
+    if not is_even(anchor):
         anchor += 11
     anchor //= 2
-    if not pair(anchor):
+    if not is_even(anchor):
         anchor += 11
-    cpt: int = 0
-    while (cpt + anchor) % 7 != 0:
-        cpt += 1
+    cpt: int = 7 - anchor % 7
     anchor = cpt + century_tag
     anchor = anchor % 7
     return anchor
@@ -32,16 +34,11 @@ def get_anchoring_day(year: int, month: int) -> int:
     return anchoring_days[month - 1]
 
 
-def get_century_tag(year):
+def get_century_tag(year: int) -> int:
     """ Returns the century tag """
     tags: list = [2, 0, 5, 3]
     index: int = math.floor(year/100) % 4
     return tags[index]
-
-
-def is_leap_year(annee):
-    """ Returns true if it is a leap year """
-    return annee % 4 == 0 and ((annee % 100 + annee % 400 == 0) or annee % 100 != 0)
 
 
 def get_day_name(day: int) -> str:
@@ -59,11 +56,6 @@ def get_day_for_date(date: str) -> str:
     year_day: int = get_year_day(year)
     anchoring_day: int = get_anchoring_day(year, month)
 
-    if (day > anchoring_day):
-        while (day > anchoring_day):
-            day -= 7
-    elif (day < anchoring_day):
-        while (day < anchoring_day):
-            day += 7
+    day = day % 7
 
     return get_day_name(((day - anchoring_day + year_day) % 7))

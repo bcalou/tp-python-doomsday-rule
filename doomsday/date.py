@@ -1,6 +1,4 @@
-def is_leap_year(annee):
-    """ Returns true if it is a leap year """
-    return annee % 4 == 0 and ((annee % 100 + annee % 400 == 0) or annee % 100 != 0)
+from .common import is_leap_year
 
 
 def get_max_month_day(year: int, month: int) -> int:
@@ -11,7 +9,6 @@ def get_max_month_day(year: int, month: int) -> int:
     elif month <= 7:
         return 30 + month % 2
     else:
-
         return 30 + (month + 1) % 2
 
 
@@ -20,9 +17,8 @@ def is_valid_date(date: str) -> bool:
     if not type(date) is str:
         return False
 
-    if '-' not in date:
-        return False
-
+    # The split method works even if there is no '-' separator: a list with
+    # only one item will be returned
     date_list: list[str] = date.split('-')
 
     if len(date_list) != 3:
