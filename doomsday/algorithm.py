@@ -88,9 +88,6 @@ def doomsday(date) :
         day_index=day_index-7
     for index, j in enumerate(DAYS) :
         if(day_index==index) :
-            my_day=[index, j]
+            my_day=j
             break
-    print(my_day)
-    return
-
-doomsday("2021-14-10")
+    return my_day
