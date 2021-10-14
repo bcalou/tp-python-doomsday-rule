@@ -1,4 +1,5 @@
 from doomsday.date import is_valid_date
+import doomsday.algorithm as algo
 
 print("Entrez une date au format YYYY-MM-dd")
 
@@ -8,6 +9,4 @@ while True :
         break
     print(selected_date + " n'est pas valide")
 
-print(selected_date + " est valide")
-
-
+print(algo.get_century_marker(int(selected_date[:4])))
