@@ -3,32 +3,43 @@ from typing import Match
 
 def is_valid_date(date) -> bool:
     date = str(date)
-    if len(date) == 10:
-        year = date[0] + date[1] + date[2] + date[3]
-        month = date[5] + date[6]
-        day = date[8] + date[9]
-        if (year + month + day).isnumeric():
-            year, month, day = int(year), int(month), int(day)
-            if (date[4] + date[7] == "--"):
-                if year >= 1583:
-                    if 0 < month <= 12:
-                        if 0 < day:
-                            if day <= day_count_in_month(month, year):
-                                return True
-                            else:
-                                print("Day too high")
-                        else:
-                            print("Day must be positive")
-                    else:
-                        print("Month must be between 1 and 12")
-                else:
-                    print("Year must be earlier than 1583")
-            else:
-                print("Separators must be hymens '-'")
-        else:
-            print("YYYY, MM & dd must be numerics")
-    else:
+
+    if len(date) != 10:
         print("YYYY-MM-dd format must contain 10 characters")
+        return False
+
+    date = date.split('-')
+
+    if len(date) != 3:
+        print("YYYY, MM & dd must be separated by hymens")
+        return False
+
+    year, month, day = date[0], date[1], date[2]
+
+    if not (year + month + day).isnumeric():
+        print("YYYY, MM & dd must be numerics")
+        return False
+
+    year, month, day = int(year), int(month), int(day)
+
+    return is_coherent_date(year, month, day)
+
+
+def is_coherent_date(year: int, month: int, day: int) -> bool:
+    if year < 1583:
+        print("Year must be earlier than 1583")
+
+    elif month <= 0 or month > 12:
+        print("Month must be between 1 and 12")
+
+    elif day < 0:
+        print("Day must be positive")
+
+    elif day > day_count_in_month(month, year):
+        print("Day too high")
+
+    else:
+        return True
 
     return False
 
