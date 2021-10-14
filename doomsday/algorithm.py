@@ -51,7 +51,7 @@ def century(year) :
 
 def anchor_day(year) :
     y=int(year[-2:])
-    anchor_day=None
+    anchor_day=0
     if (y%2 !=0) :
         y=y+11
         y=y/2
@@ -63,22 +63,34 @@ def anchor_day(year) :
     for i in range(0, 10) :
         if((7*i)>=y) :
             day_number=int(7*i-y+century(year))
-            break 
+            break
     if (day_number>6) :
         day_number=day_number-7
     for index, j in enumerate(DAYS) :
         if(day_number==index) :
-            anchor_day=[index, j]
+            anchor_day=index
             break
     return anchor_day
 
-def doomsday(date) :  
-    day=date.split('/')[0]
-    month=date.split('/')[1]
-    year=date.split('/')[2]
-    my_pivot_day=pivot_day(int(year), int(month))
+def doomsday(date) :
+    my_day=[] 
+    day=date.split('-')[2]
+    month=date.split('-')[1]
+    year=date.split('-')[0]
+    closest_anchor_day=pivot_day(int(year), int(month))
     my_anchor_day=anchor_day(year)
-    print(my_anchor_day)
+    day_index=0
+    if (closest_anchor_day>int(day)) :
+        day_index=closest_anchor_day-int(day)+my_anchor_day
+    elif (closest_anchor_day<int(day)) :
+        day_index=int(day)-closest_anchor_day+my_anchor_day
+    while (day_index>6) :
+        day_index=day_index-7
+    for index, j in enumerate(DAYS) :
+        if(day_index==index) :
+            my_day=[index, j]
+            break
+    print(my_day)
     return
 
-doomsday("28/08/1852")
+doomsday("2021-14-10")
