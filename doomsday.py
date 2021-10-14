@@ -17,5 +17,6 @@ def is_valis_year(date: str) -> bool:
 
 def is_valid_month(date: str) -> bool:
     month: str = ""
-    for char in date[4:]
+    #for char in date[4:]
+    return False
     
