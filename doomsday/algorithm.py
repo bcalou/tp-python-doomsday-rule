@@ -1,6 +1,3 @@
-def get_day_for_date(date: str) -> str:
-    return "Monday"
-
 DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 def is_leap_year(year : int) :
@@ -72,7 +69,7 @@ def anchor_day(year) :
             break
     return anchor_day
 
-def doomsday(date) :
+def get_day_for_date(date: str) -> str:
     my_day=[] 
     day=date.split('-')[2]
     month=date.split('-')[1]
