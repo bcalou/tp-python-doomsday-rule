@@ -1,7 +1,5 @@
-from typing import Match
-
-
 def is_valid_date(date) -> bool:
+    # checks if the date is in the YYYY-MM-dd format and if it is real
     date = str(date)
 
     if len(date) != 10:
@@ -26,6 +24,7 @@ def is_valid_date(date) -> bool:
 
 
 def is_coherent_date(year: int, month: int, day: int) -> bool:
+    # checks if the date can exist
     if year < 1583:
         print("Year must be earlier than 1583")
 
@@ -45,12 +44,14 @@ def is_coherent_date(year: int, month: int, day: int) -> bool:
 
 
 def is_leap_year(year: int) -> bool:
+    # checks if the year is leap
     if(year % 400 != 0):
         return year % 4 == 0 if year % 100 != 0 else False
     return True
 
 
 def day_count_in_month(month: int, year: int) -> int:
+    # returns the number of days in a given month
     month_31_list = [1, 3, 5, 7, 8, 10, 12]
     for month_31 in month_31_list:
         if month == month_31:
