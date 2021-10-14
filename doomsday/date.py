@@ -12,23 +12,19 @@ def is_valid_year(target_date: str) -> bool:
     return int(year) > 1583
 
 def is_valid_month(target_date: str) -> bool:
-    month: str = ""
+    month: str = target_date[5:7]
     for char in target_date[5:7]:
         if char.isnumeric() == False:
             print("Un ou plusieurs caractères ne sont pas des chiffres dans le mois")
             return False
-        else:
-            month = month + char
     return int(month) <= 12
-
+    
 def is_valid_day(target_date: str) -> bool:
-    day: str = ""
-    for char in target_date[8:]:
+    day: str = target_date[8:]
+    for char in day:
         if char.isnumeric() == False:
             print("Un ou plusieurs caractères ne sont pas des chiffres dans le jour")
             return False
-        else:
-            day = day + char
     return int(day) <= 31 if day[0] != 0 else True
 
 def is_valid_format(target_date: str) -> bool:
@@ -53,5 +49,3 @@ def has_right_number_of_day(target_date: str) -> bool:
     else:
         return int(day) <= 31 if day[0] != 0 else True
     return False
-
-#is_valid_date(input("Entrez une date au format 'YYYY-MM-dd' : "))
