@@ -11,13 +11,13 @@ def is_leap_year(y : int) -> bool :
 
 # check if date is at format -> YYYY-MM-dd
 def is_valid_date(date: str) -> bool:
-    m = re.match(r"(\d{4})-(\d{2})-(\d{2})", date)
+    m = re.match(r"(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})", str(date))
     if m == None:
         return False
-    # TODO ne gére pas le nombre de jour en fonction du mois
-    if int(m.group(1)) < 1583 or int(m.group(2)) > 12 or int(m.group(3)) > 31:
+    if int(m.group("year")) < 1583 or int(m.group("month")) > 12 or int(m.group("day")) > 31:
         return False
-    if int(m.group(3)) > month_max_lenght[int(m.group(2))]:
-        if m.group(2) == "02":
-            pass
+    if int(m.group("day")) > month_max_lenght[int(m.group("month")) - 1]:
+        if m.group("month") == "02" and is_leap_year(int(m.group("year"))):
+            return m.group(3) == "29"
+        return False
     return True
