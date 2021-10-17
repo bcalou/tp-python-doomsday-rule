@@ -1,4 +1,4 @@
-from tools import is_leap_year
+from doomsday.tools import is_leap_year
 
 def get_day_for_date(date_input: str) -> str:
     date : list[str] = date_input.split('-')
@@ -45,5 +45,3 @@ def get_doomsday(year : int, month : int) -> int :
     if month <= 2 and is_leap_year(year):
         return [4, 1][month - 1]
     return [3, 7, 7, 4, 2, 6, 4, 1, 5, 3, 7, 5][month - 1]
-
-print(get_day_for_date("2259-01-10"))

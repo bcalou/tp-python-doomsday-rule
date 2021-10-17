@@ -1,4 +1,4 @@
-from tools import is_leap_year
+from doomsday.tools import is_leap_year
 
 #Let's verify if the inputed date is valid
 def is_valid_date(date_input: str) -> bool:
@@ -43,5 +43,3 @@ def get_last_day_of_month(year, month) -> int :
         return 29
     else :
          return [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month - 1]
-
-print(get_last_day_of_month(2000, 2))
