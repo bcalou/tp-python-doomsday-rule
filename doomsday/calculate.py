@@ -38,23 +38,4 @@ def calculate_anchor_day(current_year: int)->str:
 
     the_current_day:int = multiple_of_7_lower - last_part_year + in_function_of_century(fist_part_year)
     
-    
-    # print("the current day " + str(the_current_day))
-
-    # the_day: str
-    # if the_current_day % 7 == 0:
-    #     return DAYS[0]
-    # elif the_current_day % 7 == 1:
-    #     return DAYS[1]
-    # elif the_current_day % 7 == 2:
-    #     return DAYS[2]
-    # elif the_current_day % 7 == 3:
-    #     return DAYS[3]
-    # elif the_current_day % 7 == 4:
-    #     return DAYS[4]
-    # elif the_current_day % 7 == 5:
-    #     return DAYS[5]
-    # elif the_current_day % 7 == 6:
-    #     return DAYS[6]
-
     return DAYS[(int)(the_current_day % 7)]
