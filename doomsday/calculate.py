@@ -1,4 +1,4 @@
-from doomsday.day import Day
+from doomsday.day import DAYS
 from doomsday.transformate import transform_string_in_date
 
 DAY: int = 0
@@ -24,13 +24,12 @@ def in_function_of_century(century: int)->int:
         return 3
     return 0
 
-def calculate_anchor_day(date: list[int])->Day:
+def calculate_anchor_day(date: list[int])->str:
     
     date_to_check = date
-    print("debug" +str(date_to_check[YEAR])[:2] + " "  + str(date_to_check[YEAR])[2:])
 
-    fist_part_year:int = int(str(date_to_check[YEAR])[:3])
-    last_part_year:int = int(str(date_to_check[YEAR])[3:])
+    fist_part_year:int = int(str(date_to_check[YEAR])[:2])
+    last_part_year:int = int(str(date_to_check[YEAR])[2:])
     temp:int 
 
     if not is_paired(last_part_year):
@@ -43,21 +42,30 @@ def calculate_anchor_day(date: list[int])->Day:
         temp = last_part_year
     
     multiple_of_7_lower: int = multiple_of_7_lower_than(temp)
+    # debug
+    # print("fist_part_year : " + str(fist_part_year))    
+    # print("last_part_year : " + str(last_part_year))    
+    # print("temp : " + str(temp))    
+    # print("multiple de 7 le plus proche : " + str(multiple_of_7_lower))    
+    # print("in_function_of_century : " + str(fist_part_year))
 
-    the_current_day:int = temp - multiple_of_7_lower + in_function_of_century(fist_part_year)
+    the_current_day:int = (temp - multiple_of_7_lower) + in_function_of_century(fist_part_year)
+    print("the current day " + str(the_current_day))
 
-    the_day: Day
-    if the_current_day % 7 == 0:
-        return Day.SUNDAY
-    elif the_current_day % 7 == 1:
-        return Day.MONDAY
-    elif the_current_day % 7 == 2:
-        return Day.TUESDAY
-    elif the_current_day % 7 == 3:
-        return Day.WEDNESDAY
-    elif the_current_day % 7 == 4:
-        return Day.THURSDAY
-    elif the_current_day % 7 == 5:
-        return Day.FRIDAY
-    elif the_current_day % 7 == 6:
-        return Day.SATURDAY
+    # the_day: str
+    # if the_current_day % 7 == 0:
+    #     return DAYS[0]
+    # elif the_current_day % 7 == 1:
+    #     return DAYS[1]
+    # elif the_current_day % 7 == 2:
+    #     return DAYS[2]
+    # elif the_current_day % 7 == 3:
+    #     return DAYS[3]
+    # elif the_current_day % 7 == 4:
+    #     return DAYS[4]
+    # elif the_current_day % 7 == 5:
+    #     return DAYS[5]
+    # elif the_current_day % 7 == 6:
+    #     return DAYS[6]
+
+    return DAYS[(int)(the_current_day % 7)]

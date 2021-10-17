@@ -1,4 +1,4 @@
-from doomsday.day import Day
+from doomsday.day import DAYS
 from doomsday.calculate import calculate_anchor_day
 from doomsday.month import month 
 from doomsday.leap import is_leap_year
@@ -57,27 +57,6 @@ def get_day_for_date(date_input: str) -> str:
     else:
         doomsday = -1 #error
 
+    anchor_day: str = calculate_anchor_day(date)
 
-    anchor_day: Day = calculate_anchor_day(date)
-    if doomsday == date[DAY]:
-        return date[DAY]
-    offset_day: int = 0
-    go_right_in_timeline: bool
-    if(date[DAY]<doomsday):
-        offset_day = doomsday - date[DAY]
-        go_right_in_timeline = False
-    else:
-        offset_day = date[DAY] - doomsday
-        go_right_in_timeline = True
-    
-    offset_day = offset_day % 7
-
-    anchor_day_as_number_in_enum:int
-    for index, checked_date in enumerate(Day):
-        if checked_date == anchor_day:
-            anchor_day_as_number_in_enum = index
-
-    if go_right_in_timeline:
-        return Day.enumerate()[anchor_day_as_number_in_enum + offset_day]
-    else:
-        return Day.enumerate()[anchor_day_as_number_in_enum - offset_day]
+    return DAYS[(date[DAY] - doomsday + DAYS.index(anchor_day)) % 7]
