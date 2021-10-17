@@ -1,9 +1,4 @@
 from doomsday.day import DAYS
-from doomsday.transformate import transform_string_in_date
-
-DAY: int = 0
-MONTH: int = 1
-YEAR: int = 2
 
 def is_paired(n: int)->bool:
     if (n % 2) == 0:
@@ -11,7 +6,8 @@ def is_paired(n: int)->bool:
     return False
 
 def multiple_of_7_lower_than(n: int)->int:
-    return (n // 7) * 7
+    return n + (7 - (n % 7))
+    # return (n // 7) * 7
 
 def in_function_of_century(century: int)->int:
     if century == 16 or century == 20:
@@ -24,33 +20,26 @@ def in_function_of_century(century: int)->int:
         return 3
     return 0
 
-def calculate_anchor_day(date: list[int])->str:
+def calculate_anchor_day(current_year: int)->str:
     
-    date_to_check = date
-
-    fist_part_year:int = int(str(date_to_check[YEAR])[:2])
-    last_part_year:int = int(str(date_to_check[YEAR])[2:])
-    temp:int 
+    fist_part_year:int = int(str(current_year)[:2])
+    last_part_year:int = int(str(current_year)[2:])
 
     if not is_paired(last_part_year):
-        temp = last_part_year + 11
-        temp = temp / 2
-        if not is_paired(temp):
-            temp = last_part_year + 11
-            temp = temp / 2
-    else:
-        temp = last_part_year
+        last_part_year = last_part_year + 11
+        last_part_year = last_part_year / 2
+        if not is_paired(last_part_year):
+            last_part_year = last_part_year + 11
     
-    multiple_of_7_lower: int = multiple_of_7_lower_than(temp)
+    multiple_of_7_lower: int = multiple_of_7_lower_than(last_part_year)
     # debug
-    # print("fist_part_year : " + str(fist_part_year))    
     # print("last_part_year : " + str(last_part_year))    
-    # print("temp : " + str(temp))    
     # print("multiple de 7 le plus proche : " + str(multiple_of_7_lower))    
-    # print("in_function_of_century : " + str(fist_part_year))
 
-    the_current_day:int = (temp - multiple_of_7_lower) + in_function_of_century(fist_part_year)
-    print("the current day " + str(the_current_day))
+    the_current_day:int = multiple_of_7_lower - last_part_year + in_function_of_century(fist_part_year)
+    
+    
+    # print("the current day " + str(the_current_day))
 
     # the_day: str
     # if the_current_day % 7 == 0:

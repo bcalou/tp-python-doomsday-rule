@@ -57,6 +57,10 @@ def get_day_for_date(date_input: str) -> str:
     else:
         doomsday = -1 #error
 
-    anchor_day: str = calculate_anchor_day(date)
+    anchor_day: str = calculate_anchor_day(date[YEAR])
+
+    print("anchor_day" + str(anchor_day))
+    print("doomsday" + str(doomsday))
+    print("day" + str(date[DAY]))
 
     return DAYS[(date[DAY] - doomsday + DAYS.index(anchor_day)) % 7]
