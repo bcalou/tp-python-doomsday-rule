@@ -2,13 +2,15 @@ from doomsday.coherence import are_valids_month_and_day
 from doomsday.leap import is_leap_year
 from doomsday.transformate import transform_string_in_date
 
+#Several values to easier dates crawling
 DAY: int = 0
 MONTH: int = 1
 YEAR: int = 2
 
 def is_valid_date(date: str) -> bool:
+    """Return True if date is valid and could be calculated"""
     date_to_check:list[int] = transform_string_in_date(date)
-
+    #If array is empty, return false
     if date_to_check == []:
         return False
 
