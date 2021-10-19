@@ -17,7 +17,10 @@ def is_valid_date(date: str) -> bool:
     if int(m.group("year")) < 1583 or int(m.group("month")) > 12 or int(m.group("day")) > 31:
         return False
     if int(m.group("day")) > month_max_lenght[int(m.group("month")) - 1]:
-        if m.group("month") == "02" and is_leap_year(int(m.group("year"))):
-            return m.group(3) == "29"
-        return False
+        return (m.group("month") == "02" and is_leap_year(int(m.group("year")))) and m.group(3) == "29"
     return True
+
+# convert date from one chain to 3 ints (year, month, day)
+def convert_date(date: str) -> int:
+    splited_date : list[str] = date.split('-')
+    return int(splited_date[0]), int(splited_date[1]), int(splited_date[2])
