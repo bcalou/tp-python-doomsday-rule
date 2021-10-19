@@ -1,16 +1,12 @@
 import re
 
-month_max_lenght = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
-
+# Return True if the year passed in argument is a leap year
 def is_leap_year(y : int) -> bool :
-    if y%4 == 0 and y%100 != 0:
-        return True
-    elif  y%400 == 0:
-        return True
-    return False
+    return (y % 4 == 0 and y % 100 != 0) or  y % 400 == 0
 
-# check if date is at format -> YYYY-MM-dd
+# Return True if date is at format -> YYYY-MM-dd
 def is_valid_date(date: str) -> bool:
+    month_max_lenght = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
     m = re.match(r"(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})", str(date))
     if m == None:
         return False
