@@ -1,12 +1,12 @@
 from doomsday.date import is_valid_date
 import doomsday.algorithm as algo
 
-print("Entrez une date au format YYYY-MM-dd")
+print("Please enter a date under format YYYY-MM-dd")
 
-while True :
-    selected_date : str = input()
+while True:
+    selected_date: str = input()
     if is_valid_date(selected_date):
         break
-    print(selected_date + " n'est pas valide")
+    print("invalide format")
 
-print(algo.get_century_marker(int(selected_date[:4])))
+print("This day was a " + algo.get_day_for_date(selected_date))
