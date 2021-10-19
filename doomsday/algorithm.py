@@ -1,6 +1,8 @@
+from doomsday.date import *
 
-days = ["Sunday", "Monday", "Thuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-pivots_commun = [3, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
+days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+common_year_pivots = [3, 0, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
+leap_year_pivots = [4, 1, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
 
 # The century marker is an empirical value base on the hundred digit over a 4 century loop
 def get_century_marker(year : int) -> int:
@@ -13,17 +15,17 @@ def compute(year: int) -> int:
     y_last_digit = y_last_digit if y_last_digit % 2 == 0 else y_last_digit + 11
     y_last_digit //= 2
     y_last_digit = y_last_digit if y_last_digit % 2 == 0 else y_last_digit + 11
-    y_last_digit = 7 - (y_last_digit%7)
-    return (y_last_digit + get_century_marker(year))% 7
+    y_last_digit = 7 - (y_last_digit % 7)
+    return (y_last_digit + get_century_marker(year)) % 7
 
-# return the anchor day based on the year
+# return the day of the date passed in argument
+# using John Conway's Doomsday Methode
 def get_day_for_date(date: str) -> str:
-    y, m, d = convert_date(myDate)
-    v : int = compute(y)
-    return days[v]
-
-if __name__ == "__main__":
-    from date import *
-    myDate = "1992-08-17"
-    print(get_day_for_date(myDate))
-    
+    year, month, day = convert_date(date)
+    anchor_day: int = compute(year)
+    if is_leap_year(year):
+        month_pivots_day = leap_year_pivots[month - 1]
+    else:
+        month_pivots_day = common_year_pivots[month - 1]
+    # shift from the anchor day by the difference between day and pivot
+    return days[(anchor_day + (day - month_pivots_day)) % 7]
