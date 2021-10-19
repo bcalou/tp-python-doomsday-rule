@@ -18,12 +18,12 @@ def compute(year: int) -> int:
 
 # return the anchor day based on the year
 def get_day_for_date(date: str) -> str:
-    d, m, y = convert_date(myDate)
+    y, m, d = convert_date(myDate)
     v : int = compute(y)
     return days[v]
 
 if __name__ == "__main__":
     from date import *
-    myDate = "17-08-1965"
+    myDate = "1992-08-17"
     print(get_day_for_date(myDate))
     
