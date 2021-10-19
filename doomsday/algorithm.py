@@ -3,48 +3,23 @@ from doomsday.calculate import calculate_anchor_day
 from doomsday.month import month 
 from doomsday.leap import is_leap_year
 from doomsday.transformate import transform_string_in_date
+from doomsday.values import DAY, MONTH, YEAR
 
-#Several values to easier dates crawling
-DAY: int = 0
-MONTH: int = 1
-YEAR: int = 2
+
+def get_doomsday_from_month(current_month: month, current_year: int):
+    if current_month == month.JANUARY:
+        return 11 if is_leap_year(current_year) else 10
+    elif current_month == month.FEBRUARY:
+        return 22 if is_leap_year(current_year) else 21
+    else:
+        return [0, 4, 9, 6, 11, 8, 5, 10, 7, 12][current_month - 2 -1]# - 2 for JANUARY and FEBRUARY and -1 because month start at 1
 
 def get_day_for_date(date_input: str) -> str:
     """Return the day after calculating the current day"""
-    doomsday: int
+    
     date: list[int] = transform_string_in_date(date_input)
-    if date[MONTH] == month.JANUARY:
-        if is_leap_year(date[YEAR]):
-            doomsday = 11
-        else:
-            doomsday = 10
-    elif date[MONTH] == month.FEBRUARY:
-        if is_leap_year(date[YEAR]):
-            doomsday = 22
-        else:
-            doomsday = 21
-    elif date[MONTH] == month.MARCH:
-        doomsday = 0
-    elif date[MONTH] == month.APRIL:
-        doomsday = 4
-    elif date[MONTH] == month.MAY:
-        doomsday = 9
-    elif date[MONTH] == month.JUNE:
-        doomsday = 6
-    elif date[MONTH] == month.JULY:
-        doomsday = 11
-    elif date[MONTH] == month.AUGUST:
-        doomsday = 8
-    elif date[MONTH] == month.SEPTEMBER:
-        doomsday = 5
-    elif date[MONTH] == month.OCTOBER:
-        doomsday = 10
-    elif date[MONTH] == month.NOVEMBER:
-        doomsday = 7
-    elif date[MONTH] == month.DECEMBER:
-        doomsday = 12
-    else:
-        doomsday = -1 #error
+
+    doomsday: int = get_doomsday_from_month(date[MONTH], date[YEAR])
 
     anchor_day: str = calculate_anchor_day(date[YEAR])
 
