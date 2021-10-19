@@ -3,30 +3,25 @@ days: list[str] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frid
 def get_day_for_date(date: str) -> str:
     return "Monday"
 
-def anchor_day(date: str) -> str:
+def get_anchor_day(date: str) -> str:
     year: str = date[:4]
     two_last_numbers_of_year: float = int(year[2:])
     number_of_the_day: float = 0
-    difference: int = 0
-    day_anchor: str = ""
-    for i in range(2):
-        if is_odd_number(two_last_numbers_of_year) and i == 0:
-            number_of_the_day = (two_last_numbers_of_year + 11) / 2
-        elif is_odd_number(number_of_the_day) and i == 1:
-            number_of_the_day += 11
-        else:
-            break
-    difference = int(first_multiple_of_7_above_number(number_of_the_day) - number_of_the_day)
-    day_anchor = days[(difference + number_of_century(year)) % 7]
 
-    return day_anchor
+    if is_odd_number(two_last_numbers_of_year):
+        number_of_the_day = (two_last_numbers_of_year + 11) / 2
+        if is_odd_number(number_of_the_day):
+            number_of_the_day += 11
+  
+    difference = int(first_multiple_of_7_above_number(number_of_the_day) - number_of_the_day)
+    anchor_day = days[(difference + anchor_of_century(year)) % 7]
+
+    return anchor_day
 
 def is_odd_number(number: float) -> bool:
-    if (number % 2 != 0):
-        return True
-    return False
+    return number % 2 != 0
 
-def first_multiple_of_7_above_number(number: float) -> float:
+""" def first_multiple_of_7_above_number(number: float) -> float:
     response: bool = False
     multiple_of_seven = 0
     count = 1
@@ -37,9 +32,14 @@ def first_multiple_of_7_above_number(number: float) -> float:
             return multiple_of_seven
         else:
             count += 1
-    return multiple_of_seven
+    return multiple_of_seven """
 
-def number_of_century(year: str) -> int:
+def first_multiple_of_7_above_number(number: float) -> float:
+    #si le nombre est un multiple de 7 on le renvoie tel quel
+    #si non on lui ajoute ce qu'il lui manque pour atteindre le multiple suivant
+    return number if number % 7 == 0 else number + 7 - (number % 7)
+
+def anchor_of_century(year: str) -> int:
     two_first_number_of_year = int(year[:2])
     control_number: int = 15
     list_possible_numbers: list[int] = [3, 2, 0, 5]

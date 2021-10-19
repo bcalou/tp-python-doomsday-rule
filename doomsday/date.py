@@ -1,7 +1,5 @@
 def is_valid_date(target_date: str) -> bool:
-    if type(target_date) != str:
-        return False
-    return is_valid_year(target_date) and is_valid_month(target_date) and is_valid_day(target_date) and has_right_number_of_day(target_date)
+    return False if type(target_date) != str else is_valid_year(target_date) and is_valid_month(target_date) and is_valid_day(target_date) and has_right_number_of_day(target_date)
 
 def is_valid_year(target_date: str) -> bool:
     year: str = target_date[0:4]
