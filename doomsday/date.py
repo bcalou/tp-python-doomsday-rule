@@ -7,24 +7,15 @@ def is_valid_date(date_input: str) -> bool:
         print("Vous n'avez pas entré votre date au format YYYY-MM-dd")
         return False
     date: list[str] = date_input.split('-')
+
+    if not len(date) == 3 and date[0].isnumeric() and date[1].isnumeric() and date[2].isnumeric() :
+        print("Le format est incorrect")
+        return False
+        
     year: int = int(date[0])
     months: int = int(date[1])
     day: int = int(date[2])
-    return (is_valid_format(date) and is_existing_date(year, months, day))
-
-
-#Let's verify if the inputed date has the good format
-def is_valid_format(date: list[str]) -> bool:
-    year = date[0]
-    month = date[1]
-    day = date[2]
-    if not (year.isnumeric() and month.isnumeric() and day.isnumeric()):
-        print("Le format est incorrect")
-        return False
-    if not (len(year) == 4 and len(month) == 2 and len(day) == 2):
-        print("Le format est incorrect")
-        return False
-    return True
+    return (is_existing_date(year, months, day))
 
 
 #Let's verify if the inputed date does exist
