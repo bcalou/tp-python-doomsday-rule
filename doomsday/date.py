@@ -1,12 +1,16 @@
 from doomsday import algorithm
 
 def is_valid_date(date: str) -> bool:
-    
-    if(str(date).count("-") <2):
+    dates = str(date).split("-")
+    if(not len(dates) == 3):
         print("Il n'y a pas ou manque des '-' dans la date")
         return False
-    dates = date.split("-")
-    return format_validation_input_date(dates)
+    if(format_validation_input_date(dates) 
+    and format_validation_year(dates) 
+    and format_validation_month(dates) 
+    and format_validation_day(dates)):
+        return True
+    return False
 
 def format_validation_input_date(dates:list[str])-> bool:
     is_wrong_date:bool = False
@@ -21,17 +25,17 @@ def format_validation_input_date(dates:list[str])-> bool:
         print("Jour invalide, mettez un jour existant au format dd")
     if(is_wrong_date):
         return False
-    return format_validation_year(dates)
+    return True
 
 def format_validation_year(dates:list[str])->bool :
     if(int(dates[0]) > 1583):
-        return format_validation_month(dates)
+        return True
     print("Année invalide, mettez une année postérieur à 1583")
     return False
 
 def format_validation_month(dates:list[str])->bool :
     if(int(dates[1]) >= 1 and int(dates[1]) <=12) :
-        return format_validation_day(dates)
+        return True
     print("Mois invalide, mettez un mois entre 01 et 12")
     return False
 
