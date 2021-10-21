@@ -85,6 +85,9 @@ def get_day_for_date(date: str) -> str:
         day_index=day_index-7
     for index, j in enumerate(DAYS) :
         if(day_index==index) :
-            my_day=j
+            my_day=str(j)
             break
+    print(my_day)
     return my_day
+
+get_day_for_date("2021-02-20")
