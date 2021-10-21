@@ -1,67 +1,44 @@
 import math
 
-EASY_CENTURY_TAG : list[list[int]] = [[19,20,21,22],[5,3,2,0]]
+
+EASY_CENTURY_TAG : list[int] = [2, 0, 5, 3]
+DAYS : list[str] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+DAYS_ANCHOR : list[int] = [10, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
     
 
-def get_day_for_date(date: str) -> str:
-    return "Monday"
-
+def get_day_for_date(date_input: str) :
+    date : list[str] = date_input.split("-")
+    day_anchor : int = get_day_anchor(date)
+    day_of_the_year: int = get_day_of_the_year(int(date[0]))
+    result = (int(date[2]) - day_anchor + day_of_the_year)%7
+    return DAYS[result]
 
 def is_leap_year(year : int) :
-
-    if(year%4 == 0):
-        if (year%100 == 0 ) :
-            if (year%400 ==0) :
-                return True
-            else :
-                return False
-        else :
-            return True
-    else : 
-        return False
+    return year%4 == 0 and year%400 == 0
 
 
 def get_century_tag(year : int ) -> int :
-    century : float = math.trunc(year/100) + 1
-    if century > 18 and century < 23 :
-        for century_tag in range(len(EASY_CENTURY_TAG[0])) :
-            if century == EASY_CENTURY_TAG[0][century_tag]:
-                print(EASY_CENTURY_TAG[1][century_tag])
-                return EASY_CENTURY_TAG[1][century_tag]
-    else :
-        while True :
-            if century < 19 :
-                century +=4
-            elif century > 23 :
-                century -=4
-            for century_tag in range(len(EASY_CENTURY_TAG[0])) :
-                if century == EASY_CENTURY_TAG[0][century_tag]:
-                    print(EASY_CENTURY_TAG[1][century_tag])
-                    return EASY_CENTURY_TAG[1][century_tag]
-    return -1
+    century : float = math.floor(year/100)
+    return EASY_CENTURY_TAG[century%4]
 
-
-def get_day_anchor(date : list[str]) -> str :
-    month : int = int(date[2])
-    if month%2 == 0 and month > 3 :
-        return str(month)
-    elif month%2 != 0 and month > 2 :
-        if month == 3 : return "00"
-        elif month == 5 : return "09"
-        elif month == 9 : return "05"
-        elif month == 7 : return "11"
-        elif month == 11 : return "07"
+def get_day_anchor(date : list[str]) -> int :
+    month : int = int(date[1])
+    year : int = int(date[0])
+    if is_leap_year(year):
+        if month == 1 : return 11
+        elif month == 2 : return 22
+        else : return DAYS_ANCHOR[month -1]
     else:
-        if is_leap_year(int(date[1])) :
-            if month == 1 : return "11"
-            elif month == 2 : return "22"
-        else :
-            if month == 1 : return "10"
-            elif month == 2 : return "21"
-            
+        return DAYS_ANCHOR[month -1]
 
-    return "null"
-
-#def get_the_day_of_year() :
-year = input("rentre année: ")
-get_century_tag(int(year))
+def get_day_of_the_year(year : int) :
+    century_tag = get_century_tag(year)
+    day_of_year = year%100
+    if (day_of_year%2!=0):
+        day_of_year+=11
+    day_of_year //= 2
+    if (day_of_year%2 !=0):
+        day_of_year+=11
+    compt = 7 - day_of_year%7
+    day_of_year  = (compt + century_tag)%7
+    return day_of_year
