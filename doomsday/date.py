@@ -23,8 +23,6 @@ def split_date(date: str) -> list[int] | None:
     day_str: str = split_date[2]
     if not is_numeric_date(day_str, month_str, year_str):
         return None
-    if len(month_str) != 2 or len(day_str) != 2:
-        return None
     year_int: int = int(year_str)
     month_int: int = int(month_str)
     day_int: int = int(day_str)
@@ -32,23 +30,14 @@ def split_date(date: str) -> list[int] | None:
     return date_split
 
 def is_numeric_date(day: str, month: str, year: str) -> bool:
-    if day.isnumeric and month.isnumeric and year.isnumeric:
-        return True
-    else:
-        return False
+    return day.isnumeric() and month.isnumeric() and year.isnumeric()
 
 def is_valid_year(year: int) -> bool:
-    if year >= 1583:
-        return True
-    else:
-        return False
+    return year >= 1583
 
 def is_valid_month(month: int) -> bool:
-    if month > 0 and month <= 12:
-        return True
-    else:
-        return False
-    
+    return month > 0 and month <= 12
+
 def is_valid_day(day: int, month: int, year: int) -> bool:
     if month in [1, 3, 5, 7, 8, 10, 12] and day > 0 and day < 32:
         return True
