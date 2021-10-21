@@ -1,18 +1,17 @@
 from doomsday.date import is_leap_year
-
+from doomsday.date import split_date
 
 def get_day_for_date(date: str) -> str:
-    split_date: list[str] = date.split("-")
-    year: int = int(split_date[0])
-    month: int = int(split_date[1])
-    day: int = int(split_date[2])
-    
-    years_anchor: int = get_anchor_day(year)
-    doomsday: int = get_landmark_day(month, year)
+    date_split: list[int] | None = split_date(date)
+    if date_split:
+        
+        years_anchor: int = get_anchor_day(date_split[0])
+        doomsday: int = get_landmark_day(date_split[1], date_split[0])
 
-    resultat: int = (years_anchor - doomsday + day) % 7
-    print(resultat)
-    return get_day_str(resultat)
+        resultat: int = (years_anchor - doomsday + date_split[2]) % 7
+        print(resultat)
+        return get_day_str(resultat)
+    return "Try Again"
 
 def get_century_anchor(year: int) -> int:
     if year % 400 >= 0 and year % 400 < 100:
