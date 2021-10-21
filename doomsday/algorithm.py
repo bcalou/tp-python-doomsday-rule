@@ -1,26 +1,11 @@
-# This function return if the year given is bisextil or not
-def is_bixestil(year) -> int:
-    return (year % 100 == 0 and year % 100 != 0) or (year % 100 == 0 and year % 100 == 0 and year % 400 == 0)
-
+from doomsday.date import is_leap_year
 
 # This function return the anchor day for a month given in input 
 def month_finder(mois,year) -> int:
-    switcher={
-        1: 10,
-        2: 21,
-        3: 0,
-        4:4,
-        5: 9,
-        6: 6,
-        7: 11,
-        8: 8,
-        9: 5,
-        10: 10,
-        11: 7 ,
-        12: 12
-    }
-    number = switcher.get(mois,"Invalid months")
-    if((mois == 1 or mois == 2 )and is_bixestil(year)):
+    months_figure_board = [10, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
+
+    number = months_figure_board[mois-1]
+    if((mois == 1 or mois == 2) and is_leap_year(year)):
         return number+1
     else:
         return number
@@ -66,15 +51,7 @@ def get_day_for_date(date: str) -> str:
     month = int(split_date[1])
     days = int(split_date[2])
 
-    days_board = {
-        0 : "Sunday",
-        1 : "Monday",
-        2 : "Tuesday",
-        3 : "Wednesday",
-        4 : "Thursday",
-        5 : "Friday",
-        6 : "Saturday"
-    }
+    days_board = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 
     day_key = int((calcul(year)+find_year_figure(year)))
     day_pivot = (month_finder(month,year))
