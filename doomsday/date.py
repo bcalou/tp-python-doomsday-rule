@@ -6,8 +6,8 @@ def is_valid_date(date: str) -> bool:
         print("Il n'y a pas ou manque des '-' dans la date")
         return False
     if(format_validation_input_date(dates) 
-    and format_validation_year(dates) 
-    and format_validation_month(dates) 
+    and format_validation_year(int(dates[0])) 
+    and format_validation_month(int(dates[1])) 
     and format_validation_day(dates)):
         return True
     return False
@@ -27,64 +27,20 @@ def format_validation_input_date(dates:list[str])-> bool:
         return False
     return True
 
-def format_validation_year(dates:list[str])->bool :
-    if(int(dates[0]) > 1583):
+def format_validation_year(year: int)->bool :
+    if(year > 1583):
         return True
     print("Année invalide, mettez une année postérieur à 1583")
     return False
 
-def format_validation_month(dates:list[str])->bool :
-    if(int(dates[1]) >= 1 and int(dates[1]) <=12) :
+def format_validation_month(month: int)->bool :
+    if(month >= 1 and month <=12) :
         return True
     print("Mois invalide, mettez un mois entre 01 et 12")
     return False
 
 def format_validation_day(dates:list[str])->bool :
-    MONTHS: list[list[int]] = [[1,3,5,7,8,10,12],[4,5,9,11]]
-    if(MONTHS[0].count(int(dates[1])) == 1):
-        return long_months_validation_day(dates)
-    elif(MONTHS[1].count(int(dates[1])) == 1):
-        return not_long_months_validation_day(dates)
-    else :
-        return leap_year_validation_day(dates)
-       
-
-def long_months_validation_day(dates:list[str]):
-    if(int(dates[2])>=1 and int(dates[2])<=31):
-        print("Date valide")
-        return True
-    else:
-        print("Date invalide, pour le mois : " 
-        + dates[1] 
-        + " le jour doit être compris entre 1 et 31 inclus")
-        return False
-
-def not_long_months_validation_day(dates:list[str]):
-    if(int(dates[2])>=1 and int(dates[2])<=30):
-        print("Date valide")
-        return True
-    else:
-        print("Date invalide, pour le mois : " 
-        + dates[1] 
-        + " le jour doit être compris entre 1 et 30 inclus")
-        return False
-
-def leap_year_validation_day(dates:list[str]):
+    MONTHS_DAY: list[int] = [31,28,31,30,31,30,31,31,30,31,30,31]
     if(algorithm.is_leap_year(int(dates[0]))):
-        if(int(dates[2])>=1 and int(dates[2])<=29):
-            print("Date valide")
-            return True
-        else:
-            print("Date invalide, pour le mois : " 
-            + dates[1] 
-            + " le jour doit être compris entre 1 et 29 inclus")
-            return False
-    else:
-        if(int(dates[2])>=1 and int(dates[2])<=28):
-            print("Date valide")
-            return True
-        else:
-            print("Date invalide, pour le mois : " 
-            + dates[1] 
-            + " le jour doit être compris entre 1 et 28 inclus")
-            return False
+        MONTHS_DAY[1] = 29
+    return True if int(dates[2]) > 0 and int(dates[2]) <= MONTHS_DAY[int(dates[1])-1] else False
