@@ -1,13 +1,13 @@
 from doomsday.date import is_leap_year, is_valid_date
 
-start_days: list[int] = [10, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
-days: list[str] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+START_DAYS: list[int] = [10, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
+DAYS: list[str] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 def get_day_for_date(date: str) -> str:
     if is_valid_date(date):
-        year: str = date[0:4]
-        month: str = date[5:7]
-        day: str = date[8:]
+        year: str = date.split('-')[0]
+        month: str = date.split('-')[1]
+        day: str = date.split('-')[2]
         start_day = get_start_day(year, month)
         anchor_day = get_anchor_day(year)
 
@@ -16,7 +16,7 @@ def get_day_for_date(date: str) -> str:
         #exemple si le jour ancre est un mercredi et que le jour de départ est le 4 (pour avril) et le jour donnée le 5
         #l'index du jour est 3, la différence = 4 - 5 = -1, -1 % 7 = 6, 3 - 6 = -3, en partant de la fin de la liste
         #on tombe sur Thursday donc le jour juste après Wednesday
-        return days[(days.index(anchor_day) - (start_day - int(day)) % 7)] if start_day - int(day) != 0 else anchor_day
+        return DAYS[(DAYS.index(anchor_day) - (start_day - int(day)) % 7)] 
     else:
         print("Date non valide")
         return ""
@@ -26,16 +26,15 @@ def get_anchor_day(year: str) -> str:
     number_of_the_day: float = 0
 
     if is_odd_number(two_last_numbers_of_year):
-        number_of_the_day = (two_last_numbers_of_year + 11) / 2
-        if is_odd_number(number_of_the_day):
-            number_of_the_day += 11
-    else:
-        number_of_the_day = two_last_numbers_of_year / 2
-        if is_odd_number(number_of_the_day):
-            number_of_the_day += 11
+        number_of_the_day = two_last_numbers_of_year + 11
+
+    number_of_the_day = number_of_the_day / 2 
+
+    if is_odd_number(number_of_the_day):
+        number_of_the_day += 11
   
     difference = int(first_multiple_of_7_above_number(number_of_the_day) - number_of_the_day)
-    anchor_day = days[(difference + anchor_of_century(year)) % 7]
+    anchor_day = DAYS[(difference + anchor_of_century(year)) % 7]
 
     return anchor_day
 
@@ -61,6 +60,6 @@ def anchor_of_century(year: str) -> int:
 
 def get_start_day(year: str, month: str) -> int:
     if is_leap_year(year) and (int(month) == 1 or int(month) == 2):
-        return start_days[int(month) - 1] + 1
+        return START_DAYS[int(month) - 1] + 1
     else:
-        return start_days[int(month) - 1]
+        return START_DAYS[int(month) - 1]
