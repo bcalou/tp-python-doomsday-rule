@@ -1,7 +1,6 @@
-DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+from doomsday.utils import is_leap_year
 
-def is_leap_year(year : int) :
-    return ((year%4 == 0 and year%100!=0) or (year%100==0 and year%400==0))
+DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 def pivot_day(year : int, month : int) :
     pivot_day=0
