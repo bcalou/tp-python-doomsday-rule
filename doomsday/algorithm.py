@@ -15,16 +15,12 @@ def get_day_for_date(date: str) -> str:
 
 def get_century_anchor(year: int) -> int:
     if year % 400 >= 0 and year % 400 < 100:
-        print("2")
         return 2
     elif year % 400 >= 100 and year % 400 < 200:
-        print("0")
         return 0
     elif year % 400 >= 200 and year % 400 < 300:
-        print("5")
         return 5
     elif year % 400 >= 300 and year % 400 < 400:
-        print("3")
         return 3
     return 0
     
