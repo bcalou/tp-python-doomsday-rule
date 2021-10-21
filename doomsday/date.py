@@ -29,46 +29,34 @@ def is_leap_year(date_string: str) -> bool:
 def does_date_exist(date_string: str) -> bool:
     if get_year(date_string) < 1583 or get_month(date_string) > 12:
         return False
-    elif get_month(date_string) % 2 == 1 and get_month(date_string) <= 7 or get_month(date_string) % 2 == 0 and get_month(date_string) > 7 and get_day(date_string) > 30:
+    elif ((get_month(date_string) % 2 == 1 and get_month(date_string) <= 7) or (get_month(date_string) % 2 == 0 and get_month(date_string) > 7)) and get_day(date_string) > 31:
         return False
-    elif get_day(date_string) > 31:
+    elif ((get_month(date_string) % 2 == 0 and get_month(date_string) <= 7) or (get_month(date_string) % 2 == 1 and get_month(date_string) > 7)) and get_day(date_string) > 30:
         return False
     elif get_month(date_string) == 2:
-        if get_day(date_string) > 28 and not is_leap_year(date_string) or get_day(date_string) > 29 and is_leap_year(date_string):
+        if get_day(date_string) > 28 and not is_leap_year(date_string):
+            return False
+        elif get_day(date_string) > 29 and is_leap_year(date_string):
             return False
     return True
 
 
 def is_valid_date(date_string: str) -> bool:
-    try:
-        int(get_day(date_string))
-    except ValueError:
-        print("Your day is not valid. Format should be YYYY-MM-DD")
-        return False
-    except IndexError:
+    if isinstance(date_string, (int, list, dict)):
         print("Your format is not valid should be YYYY-MM-DD")
         return False
 
-    try:
-        int(get_month(date_string))
-    except ValueError:
-        print("Your month is not valid. Format should be YYYY-MM-DD")
+    date_splited: list = date_string.split("-")
+    if len(date_splited) < 3 and len(date_splited) > 3:
+        print("Your format is not valid should be YYYY-MM-DD")
         return False
 
-    try:
-        int(get_year(date_string))
-    except ValueError:
-        print("Your year is not valid. Format should be YYYY-MM-DD")
+    if not date_splited[0].isnumeric or not date_splited[1].isnumeric or not date_splited[2].isnumeric:
+        print("Your date is not a composed only of number")
         return False
 
     if not does_date_exist(date_string):
-        print("This date does not exist or is before 1583")
+        print("This date does not exist")
         return False
+
     return True
-
-
-while True:
-    date_string: str = input("Write a date (format: YYYY-MM-dd) \n")
-    if is_valid_date(date_string):
-        break
-    continue
