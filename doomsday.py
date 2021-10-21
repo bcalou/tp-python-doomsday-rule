@@ -1,3 +1,3 @@
-from doomsday.date import is_valid_date
+from doomsday.algorithm import get_day_for_date
 
-is_valid_date(input("Entrez une date au format 'YYYY-MM-dd' : "))
+get_day_for_date(input("Entrez une date au format 'YYYY-MM-dd' : "))
