@@ -5,7 +5,7 @@ def is_leap_year(year : int) :
 
 def pivot_day(year : int, month : int) :
     pivot_day=0
-    if (is_leap_year(year) and month==1 or month==2) :
+    if (is_leap_year(year) and (month==1 or month==2)) :
         if (month==1) :
             pivot_day=11
         elif (month==2) :
@@ -34,16 +34,24 @@ def century(year) :
     century=0
     if (y>=20) :
         t=y-20
+        if (t%4==0) :
+            century=2
+        elif(t%4==3) :
+            century=3
+        elif(t%4==2) :
+            century=5
+        elif(t%4==1) :
+            century=0
     else :
         t=20-y
-    if (t%4==0) :
-        century=2
-    elif(t%4==3) :
-        century=0
-    elif(t%4==2) :
-        century=5
-    elif(t%4==1) :
-        century=3
+        if (t%4==0) :
+            century=2
+        elif(t%4==3) :
+            century=0
+        elif(t%4==2) :
+            century=5
+        elif(t%4==1) :
+            century=3
     return century
 
 def anchor_day(year) :
@@ -78,16 +86,22 @@ def get_day_for_date(date: str) -> str:
     my_anchor_day=anchor_day(year)
     day_index=0
     if (closest_anchor_day>int(day)) :
-        day_index=closest_anchor_day-int(day)+my_anchor_day
+        if (my_anchor_day!=0) :
+            day_index=my_anchor_day-(closest_anchor_day-int(day))
+        else :
+            day_index=6-(closest_anchor_day-int(day))+1
     elif (closest_anchor_day<int(day)) :
         day_index=int(day)-closest_anchor_day+my_anchor_day
+    else :
+        day_index=int(my_anchor_day)
     while (day_index>6) :
         day_index=day_index-7
     for index, j in enumerate(DAYS) :
         if(day_index==index) :
             my_day=str(j)
             break
-    print(my_day)
-    return my_day
+    print("The "+date+" is a "+my_day+".")
+    return str(my_day)
 
-get_day_for_date("2021-02-20")
+get_day_for_date("2159-01-10")
+get_day_for_date("2359-01-10")
