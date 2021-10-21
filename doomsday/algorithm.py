@@ -10,14 +10,13 @@ def get_day_for_date(date: str) -> str:
         day: str = date[8:]
         start_day = get_start_day(year, month)
         anchor_day = get_anchor_day(year)
-        #index(anchor day) + (start_day - day) % 7 si star_day - day > 0
-        #index(anchor day) - (start_day - day) % 7 si star_day - day < 0
-        if start_day - int(day) > 0:
-            return days[(days.index(anchor_day) - (start_day - int(day)) % 7)]
-        elif start_day - int(day) < 0:
-            return days[(days.index(anchor_day) - (start_day - int(day)) % 7)]
-        else:
-            return anchor_day
+
+        #si on enlève à l'index du jour ancre, la différence modulo 7 entre le jour de départ et le jour donnée 
+        #on obtient le jour de la liste correspondant au décalage
+        #exemple si le jour ancre est un mercredi et que le jour de départ est le 4 (pour avril) et le jour donnée le 5
+        #l'index du jour est 3, la différence = 4 - 5 = -1, -1 % 7 = 6, 3 - 6 = -3, en partant de la fin de la liste
+        #on tombe sur Thursday donc le jour juste après Wednesday
+        return days[(days.index(anchor_day) - (start_day - int(day)) % 7)] if start_day - int(day) != 0 else anchor_day
     else:
         print("Date non valide")
         return ""
