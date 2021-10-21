@@ -6,13 +6,11 @@ def is_valid_date(date) -> bool:
         print("YYYY-MM-dd format must contain 10 characters")
         return False
 
-    date = date.split('-')
-
-    if len(date) != 3:
+    if len(date.split('-')) != 3:
         print("YYYY, MM & dd must be separated by hymens")
         return False
 
-    year, month, day = date[0], date[1], date[2]
+    year, month, day = date.split('-')
 
     if not (year + month + day).isnumeric():
         print("YYYY, MM & dd must be numerics")
@@ -52,14 +50,16 @@ def is_leap_year(year: int) -> bool:
 
 def day_count_in_month(month: int, year: int) -> int:
     # returns the number of days in a given month
-    month_31_list = [1, 3, 5, 7, 8, 10, 12]
-    for month_31 in month_31_list:
-        if month == month_31:
-            return 31
 
-    month_30_list = [4, 6, 9, 11]
-    for month_30 in month_30_list:
-        if month == month_30:
-            return 30
+    # in this list, from index 0 to index 6 included are the 31 days months
+    # from index 7 to 10 included are the 30 days months
+    # and index 11 is February
+    month_descending_list = [1, 3, 5, 7, 8, 10, 12, 4, 6, 9, 11, 2]
+
+    if month_descending_list.index(month) <= 6:
+        return 31
+
+    if month_descending_list.index(month) <= 10:
+        return 30
 
     return 29 if is_leap_year(year) else 28
