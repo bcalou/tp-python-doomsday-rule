@@ -23,5 +23,4 @@ def is_valid_date(date: str) -> bool:
             if day < 1 or day > year_month[month-1]:
                 return False
         return True
-
-
+    

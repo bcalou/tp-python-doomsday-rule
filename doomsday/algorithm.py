@@ -20,6 +20,13 @@ def get_day_for_date(date: str) -> str:
     return DAYS_OF_WEEK[week_day]
 
 def get_dooms_day(year: int) -> int:
+    """
+    return the doomsday of the input year
+    Args:
+        year (int): year of the input date
+    Returns:
+        int: doomsday of the input year
+    """    
     century = math.floor(year / 100)
     ancre_date_of_century = (5 * (century % 4) + 2) % 7
     century_rest = year % 100
