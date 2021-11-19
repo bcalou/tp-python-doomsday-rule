@@ -6,37 +6,30 @@ Modified on Thu Oct 14 2021
 """
 
 
-def get_year(date_string: str) -> int:
-    date_list: list = date_string.split('-')
-    return int(date_list[0])
-
-
-def get_month(date_string: str) -> int:
-    date_list: list = date_string.split('-')
-    return int(date_list[1])
-
-
-def get_day(date_string: str) -> int:
-    date_list: list = date_string.split('-')
-    return int(date_list[2])
-
-
 def is_leap_year(date_string: str) -> bool:
-    year: int = get_year(date_string)
+    date_list: list = date_string.split('-')
+    year: int = date_list[0]
     return year % 4 == 0 and year % 100 != 0 or year % 400 == 0
 
 
 def does_date_exist(date_string: str) -> bool:
-    if get_year(date_string) < 1583 or get_month(date_string) > 12:
+    date_list: list = date_string.split('-')
+    if date_list[0] < 1583 or date_list[1] > 12:
         return False
-    elif ((get_month(date_string) % 2 == 1 and get_month(date_string) <= 7) or (get_month(date_string) % 2 == 0 and get_month(date_string) > 7)) and get_day(date_string) > 31:
-        return False
-    elif ((get_month(date_string) % 2 == 0 and get_month(date_string) <= 7) or (get_month(date_string) % 2 == 1 and get_month(date_string) > 7)) and get_day(date_string) > 30:
-        return False
-    elif get_month(date_string) == 2:
-        if get_day(date_string) > 28 and not is_leap_year(date_string):
+    elif date_list[2] > 31:
+        if date_list[1] % 2 == 1 and date_list[1] <= 7:
             return False
-        elif get_day(date_string) > 29 and is_leap_year(date_string):
+        elif date_list[1] % 2 == 0 and date_list[1] > 7:
+            return False
+    elif date_list[2] > 30:
+        if date_list[1] % 2 == 0 and date_list[1] <= 7:
+            return False
+        elif date_list[1] % 2 == 1 and date_list[1] > 7:
+            return False
+    elif date_list[1] == 2:
+        if date_list[2] > 28 and not is_leap_year(date_string):
+            return False
+        elif date_list[2] > 29 and is_leap_year(date_string):
             return False
     return True
 
@@ -47,7 +40,7 @@ def is_valid_date(date_string: str) -> bool:
         return False
 
     date_splited: list = date_string.split("-")
-    if len(date_splited) < 3 and len(date_splited) > 3:
+    if len(date_splited) != 3:
         print("Your format is not valid should be YYYY-MM-DD")
         return False
 
