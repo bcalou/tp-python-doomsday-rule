@@ -29,7 +29,7 @@ Pour tester, exécutez le fichier `test-date.py`.
 
 Dans un second temps, utilisez l'algorithme du jour du jugement dernier pour déterminer le jour en fonction de la date.
 
-Pour simplifier les tests, votre fonction de calcul devra se trouver dans le fichier `doomsday/algorithm.py` et se nommer `get_day_for_date()`
+Pour simplifier les tests, votre fonction de calcul devra se trouver dans le fichier `doomsday/algorithm.py` et se nommer `get_weekday_for_date()`
 
 ### Comment tester ?
 
