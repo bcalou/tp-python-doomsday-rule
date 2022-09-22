@@ -30,5 +30,11 @@ elif is_valid_date('2021-04-31'):
 elif is_valid_date('01-01-2020'):
     print('\033[91m❌ 01-01-2020 should not be valid')
 
+elif is_valid_date('01-01-'):
+    print('\033[91m❌ 01-01- should not be valid')
+
+elif is_valid_date('-01-2020'):
+    print('\033[91m❌ -01-2020 should not be valid')
+
 else:
     print('\033[92m✓ OK')
