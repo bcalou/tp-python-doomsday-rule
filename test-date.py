@@ -27,12 +27,6 @@ elif is_valid_date('1900-02-29'):
 elif is_valid_date('2021-04-31'):
     print('\033[91m❌ 2021-04-31 should not be valid')
 
-elif is_valid_date(2021043):
-    print('\033[91m❌ 2021043 should not be valid')
-
-elif is_valid_date([2020, 4, 30]):
-    print('\033[91m❌ [2020, 4, 30] should not be valid')
-
 elif is_valid_date('01-01-2020'):
     print('\033[91m❌ 01-01-2020 should not be valid')
 
