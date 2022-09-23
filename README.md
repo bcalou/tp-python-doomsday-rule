@@ -4,7 +4,7 @@ Seules les dates à partir de l'année 1583 (première année complète du calen
 
 ## Saisie de la date
 
-La première partie du projet consiste à demander une date au format `YYYY-MM-dd` et à définir si elle est valide ou non. La récupération de cet input se fera dans le fichier principal `doomsday.py`.
+La première partie du projet consiste à demander une date au format `YYYY-MM-dd` ou `YYYY-M-d` et à définir si elle est valide ou non. La récupération de cet input se fera dans le fichier principal `doomsday.py`.
 
 Puis vous devrez vérifier :
 
