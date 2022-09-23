@@ -8,8 +8,8 @@ La première partie du projet consiste à demander une date au format `YYYY-MM-d
 
 Puis vous devrez vérifier :
 
-- Que l'input suit correctement le format "YYYY-MM-dd"
-- Que la date est postérieure à 1583 et existe
+- Que l'input suit correctement le format "YYYY-MM-dd" (un caractère unique est également autorisé pour le mois et le jour)
+- Que la date est supérieure ou égale à 1583 et existe
 
 Lorsque l'utilisateur commet une erreur de saisie, vous devez lui expliquer laquelle.
 
