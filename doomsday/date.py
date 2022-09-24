@@ -44,7 +44,7 @@ def is_valid_month(month: str) -> bool:
     return True
 
 
-def is_valid_day(day: str, month: str) -> bool:
+def is_valid_day(day: str, month: str, year: str) -> bool:
     """Checks if the day is a valid number and between 1 and the last day of
     the month
     """
@@ -57,14 +57,21 @@ def is_valid_day(day: str, month: str) -> bool:
         print("Error: the day must greater than 0")
         return False
 
-    if not is_valid_day_in_month(int(day), int(month)):
+    if not is_valid_day_in_month(int(day), int(month), int(year)):
         return False
 
     return True
 
 
-def is_valid_day_in_month(day: int, month: int) -> bool:
-    """Returns true if the day exists in its month"""
+def is_leap_year(year: int) -> bool:
+    """Returns true if the year is a leap year
+    """
+    return year % 4 == 0 and (not year % 100 == 0 or year % 400 == 0)
+
+
+def is_valid_day_in_month(day: int, month: int, year: int) -> bool:
+    """Returns true if the day exists in its month
+    """
 
     # Month with 30 days
     if month == 4 or month == 6 or month == 9 or month == 11 and not day <= 30:
@@ -80,21 +87,30 @@ def is_valid_day_in_month(day: int, month: int) -> bool:
               MONTHS[month-1])
         return False
 
-    # TODO : LEAP YEAR MANAGEMENT
     # February
-    if month == 2 and not day <= 28:
-        print("Error: the date is not valid, there are 28 days in February")
-        return False
+    if is_leap_year(year):
+        if month == 2 and not day <= 29:
+            print("Error: the date is not valid, there are 29 days in "
+                  "February this year")
+            return False
+    else:
+        if month == 2 and not day <= 28:
+            print("Error: the date is not valid, there are 28 days in "
+                  "February this year")
+            return False
 
     return True
 
 
 def is_valid_date(date: str) -> bool:
-    """Returns true if the date is valid"""
+    """Returns true if the date is valid
+    """
 
     # The year is necessarily the first four characters of the date
     if not is_valid_year(date[:4]):
         return False
+
+    year: str = date[:4]
 
     if not is_valid_separator(date[4]):
         return False
@@ -109,8 +125,7 @@ def is_valid_date(date: str) -> bool:
         if not is_valid_separator(date[7]):
             return False
 
-        month: str = date[5:7]
-        if not is_valid_day(date[8:], month):
+        if not is_valid_day(date[8:], date[5:7], year):
             return False
     else:
         # The month has only one digit
@@ -120,13 +135,7 @@ def is_valid_date(date: str) -> bool:
         if not is_valid_separator(date[6]):
             return False
 
-        month: str = date[5]
-        if not is_valid_day(date[7:], month):
+        if not is_valid_day(date[7:], date[5], year):
             return False
 
-    # Check valid date (interdit : 31 avril)
     return True
-
-# Day = n° du jour (entre 1 et 31)
-# Week_day = jour de la semaine (lundi, ...)
-
