@@ -5,5 +5,4 @@ while True:
     date: str = input("Enter a date to get the corresponding weekday (YYYY-MM-dd) : ")
 
     if is_valid_date(date):
-        print(int_date_list)
-        print("Youpi")
+        get_day_for_date(date)
