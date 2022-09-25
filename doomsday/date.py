@@ -1,19 +1,19 @@
-str_date_list: list[str] = []
-int_date_list: list[int] = []
-year: int = 0
-month: int = 0
-day: int = 0
-
+global str_date_list; str_date_list: list[str] = []
+global int_date_list; int_date_list: list[int] = []
+global year; year: int = 0
+global month; month: int = 0
+global day; day: int = 0
 
 
 def is_valid_date(date: str) -> bool:
     """Checking if entered string format is correct and if the date exists"""
+    reset_global_variables()
 
     if not is_string_format_correct(date):
         return False
     else:
-        create_date_list()
-        store_values_from_date_list_in_variables()
+        parse_string_date_to_variables()
+        #store_values_from_date_list_in_variables()
     
     if not does_year_exists(year):
         return False
@@ -24,7 +24,7 @@ def is_valid_date(date: str) -> bool:
     if not does_day_exists(day):
         return False
     
-    reset_global_variables()
+    #reset_global_variables()
     return True
 
 
@@ -37,7 +37,7 @@ def is_string_format_correct(input: str) -> bool:
             dash_quantity_in_input_string += 1
     
     if dash_quantity_in_input_string != 2:
-        print("Please format date with dashes")
+        print("Please input a correct date format (YYYY-MM-dd) with dashes")
         return False
     
     global str_date_list
@@ -62,19 +62,26 @@ def is_string_format_correct(input: str) -> bool:
 
 
 
-def create_date_list():
+def parse_string_date_to_variables():
     global int_date_list
+    global year, month, day
 
     for index in range(len(str_date_list)):
         int_date_list.append(int(str_date_list[index]))
+        
+    year = int_date_list[0]
+    month = int_date_list[1]
+    day = int_date_list[2]
 
 
 
+"""
 def store_values_from_date_list_in_variables():
     global year, month, day
     year = int_date_list[0]
     month = int_date_list[1]
     day = int_date_list[2]
+"""
 
 
 
@@ -97,12 +104,12 @@ def does_month_exists(given_month: int) -> bool:
 
 
 def does_day_exists(given_day: int) -> bool:
-    months_with_30_days: list[int] = [4, 6, 9, 11]
-    months_with_31_days: list[int] = [1, 3, 5, 7, 8, 10, 12]
+    MONTHS_WITH_30_DAYS: list[int] = [4, 6, 9, 11]
+    MONTHS_WITH_31_DAYS: list[int] = [1, 3, 5, 7, 8, 10, 12]
     
     if (
-        (month in months_with_30_days) and (not 0 < given_day <= 30) or
-        (month in months_with_31_days) and (not 0 < given_day <= 31)
+        (month in MONTHS_WITH_30_DAYS) and (not 0 < given_day <= 30) or
+        (month in MONTHS_WITH_31_DAYS) and (not 0 < given_day <= 31)
     ):
         print("This day doesn't exist in this month")
         return False
