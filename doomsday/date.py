@@ -1,6 +1,8 @@
 MONTHS: list[str] = ["January", "February", "March", "April", "May", "June",
                      "July", "August", "September", "October", "November",
                      "December"]
+WEEK_DAYS: list[str] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+                        "Friday", "Saturday"]
 
 
 def is_valid_year(year: str) -> bool:
