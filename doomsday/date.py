@@ -76,18 +76,19 @@ def is_valid_day_in_month(day: int, month: int, year: int) -> bool:
     """
 
     # Month with 30 days
-    if month == 4 or month == 6 or month == 9 or month == 11 and not day <= 30:
-        print("Error: the date is not valid, there are 30 days in",
-              MONTHS[month-1])
-        return False
+    if month == 4 or month == 6 or month == 9 or month == 11:
+        if not day <= 30:
+            print("Error: the date is not valid, there are 30 days in",
+                  MONTHS[month - 1])
+            return False
 
     # Month with 31 days
-    if (month == 1 or month == 3 or month == 5 or 
-            month == 7 or month == 8 or month == 10 or 
-            month == 12) and not day <= 31:
-        print("Error: the date is not valid, there are 31 days in",
-              MONTHS[month-1])
-        return False
+    if (month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or
+            month == 10 or month == 12):
+        if not day <= 31:
+            print("Error: the date is not valid, there are 31 days in",
+                  MONTHS[month - 1])
+            return False
 
     # February
     if is_leap_year(year):
