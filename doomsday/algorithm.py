@@ -13,16 +13,31 @@ def get_higher_multiple_of_7(number: int) -> int:
     return (number // 7) + 1
 
 
-def get_week_doomsday_of_year(year: str) -> str:
-    """Returns the "doomsday" week day from a given year
+def get_century_index(century: int) -> int:
+    """Returns the index of a given century"""
+
+    number_of_the_century = (century // 100) % 4
+    if number_of_the_century == 0:
+        return 2
+    elif number_of_the_century == 1:
+        return 0
+    elif number_of_the_century == 2:
+        return 5
+    else:
+        return 3
+
+
+def get_week_anchor_day_of_year(year: str) -> int:
+    """Returns the number of the week day corresponding to the anchor day from
+    a given year
     """
 
     year_2_last_digits: int = int(year[2:])
 
-    if is_even(year_2_last_digits):
-        year_2_last_digits /= 2
-    else:
+    if not is_even(year_2_last_digits):
         year_2_last_digits += 11
+
+    year_2_last_digits /= 2
 
     if not is_even(year_2_last_digits):
         year_2_last_digits += 11
@@ -30,12 +45,12 @@ def get_week_doomsday_of_year(year: str) -> str:
     number_to_multiple_of_7: int = (get_higher_multiple_of_7(
         year_2_last_digits) * 7) - year_2_last_digits
 
-    # TODO : FUNCTION TO GET THE CENTURY NUMBER
-    number_to_multiple_of_7 += 2
+    number_to_multiple_of_7 += get_century_index(int(year) - year_2_last_digits)
 
+    # Get the day between 0 and 6
     number_to_multiple_of_7 %= 7
 
-    return WEEK_DAYS[int(number_to_multiple_of_7)]
+    return int(number_to_multiple_of_7)
 
 
 def get_anchor_day_of_the_month(month: int, year: int) -> int:
@@ -66,6 +81,12 @@ def get_anchor_day_of_the_month(month: int, year: int) -> int:
         return 7
 
 
+def get_week_day(day_in_month: int, anchor_day: int, week_doomsday: int) -> str:
+    """Returns the week day of a day in a month
+    """
+    return WEEK_DAYS[(week_doomsday + (day_in_month - anchor_day)) % 7]
+
+
 def get_weekday_for_date(date: str) -> str:
     """Returns the week day of a given date
     """
@@ -73,20 +94,14 @@ def get_weekday_for_date(date: str) -> str:
     if not is_valid_date(date):
         return "The date is not valid."
 
+    # TODO : Day with 1 digit management
     year: str = date[:4]
-    month: str = date[5:7]
-    day: str = date[8:]
+    month: int = int(date[5:7])
+    day: int = int(date[8:])
 
-    week_doomsday: str = get_week_doomsday_of_year(year)
+    # The week day of the anchor day of the year
+    anchor_week_day: int = get_week_anchor_day_of_year(year)
 
-    anchor_day: int = get_anchor_day_of_the_month(int(month), int(year))
+    anchor_day: int = get_anchor_day_of_the_month(month, int(year))
 
-    print("The", anchor_day, MONTHS[int(month) - 1], "of the year", year,
-          "was a", week_doomsday)
-
-    # TODO : FUNCTION TO DETERMINE THE DAY ACCORDING TO THE ANCHOR DAY
-
-    return "Monday"
-
-
-get_weekday_for_date("2016-03-01")
+    return get_week_day(day, anchor_day, anchor_week_day)
