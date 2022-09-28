@@ -10,14 +10,22 @@ def is_valid_date(date: str) -> bool:
     if len(splited_date) != 3:
         return False
     # Check if the year input is a number that fits in the gregorian calendar
-    if not splited_date[0].isdigit() or int(splited_date[0]) < 1583:
+    if not splited_date[0].isdigit() or is_year_valid(splited_date[0]):
         return False
 
     # Check if the month input is a number that is between 1 and 12
-    if not (splited_date[1].isdigit() and (int(splited_date[1]) <= 12 and int(splited_date[1]) >= 1)):
+    if not (splited_date[1].isdigit() and (is_month_valid(splited_date[1]))):
         return False
 
     return is_day_valid(splited_date[2], int(splited_date[1]), int(splited_date[0]))
+
+
+def is_year_valid(year: str):
+    return int(year) < 1583
+
+
+def is_month_valid(month: str):
+    return int(month) <= 12 and int(month) >= 1
 
 
 def is_day_valid(day_text: str, month: int, year: int) -> bool:
