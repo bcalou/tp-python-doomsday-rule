@@ -1,5 +1,3 @@
-import doomsday
-
 SEMAINE: tuple = ("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi")
 
 def get_day_for_date(date: str) -> str:
@@ -13,16 +11,16 @@ def get_day_for_date(date: str) -> str:
     anchor_weekday: int = get_anchor_weekday(get_year_anchor(siecle), annee)
     ancre_mois: int = get_month_anchor(mois, is_leap_year(annee))
 
-    jour_calcule: int = (jour - ancre_mois + anchor_weekday)%7
+    jour_calcule: int = (jour - ancre_mois + anchor_weekday) % 7
 
     return SEMAINE[jour_calcule]
 
 def get_anchor_weekday(year_anchor: int, year: int) -> int:
     """Calculates the anchor day for the given year"""
-    if year % 2 == 1 :
+    if year % 2 == 1:
         year += 11
     year = year // 2
-    if year % 2 == 1 :
+    if year % 2 == 1:
         year += 11
 
     jour_ancre: int = 7 - (year % 7) + year_anchor
@@ -52,11 +50,11 @@ def is_leap_year(year: int) -> bool:
 
 def get_year_anchor(siecle: int) -> int:
     """Return the year anchor for the given century"""
-    if siecle % 4 == 0 :
+    if siecle % 4 == 0:
         return 2
-    if siecle % 4 == 1 :
+    if siecle % 4 == 1:
         return 0
-    if siecle % 4 == 2 :
+    if siecle % 4 == 2:
         return 5
     return 3
 
