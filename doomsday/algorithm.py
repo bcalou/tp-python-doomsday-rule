@@ -1,4 +1,4 @@
-SEMAINE: tuple = ("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi")
+WEEK: tuple = ("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 
 def get_day_for_date(date: str) -> str:
     """Return the day of the week for the given date (format = YYYY-MM-DD)"""
@@ -12,11 +12,10 @@ def get_day_for_date(date: str) -> str:
 
 
     anchor_weekday: int = get_anchor_weekday(get_year_bonus(siecle), annee)
-    ancre_mois: int = get_month_anchor(mois, is_leap_year(annee))
+    month_anchor: int = get_month_anchor(mois, is_leap_year(siecle*100 + annee))
 
-    jour_calcule: int = (jour - ancre_mois + anchor_weekday) % 7
-
-    return SEMAINE[jour_calcule]
+    jour_calcule: int = (anchor_weekday + (jour - month_anchor)) % 7
+    return WEEK[jour_calcule]
 
 def get_anchor_weekday(year_bonus: int, year: int) -> int:
     """Calculates the anchor day for the given year"""
@@ -42,9 +41,9 @@ def get_month_anchor(mois: int,is_leap_year: bool) -> int:
 def special_month_cases(mois: int, is_leap_year: bool) -> int:
     """Completes get_month_anchor for special cases (the first 3 months)"""
     if mois == 1:
-        return 10 if is_leap_year else 11
+        return 11 if is_leap_year else 10
     if mois == 2:
-        return 21 if is_leap_year else 22
+        return 22 if is_leap_year else 21
     return 0
 
 def is_leap_year(year: int) -> bool:
