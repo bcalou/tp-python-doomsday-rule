@@ -39,7 +39,7 @@ def get_month_anchor(mois: int,is_leap_year: bool) -> int:
     return mois # Les autres mois correspondent à leur jour ancre
 
 def special_month_cases(mois: int, is_leap_year: bool) -> int:
-    """Completes get_month_anchor for special cases"""
+    """Completes get_month_anchor for special cases (the first 3 months)"""
     if mois == 1:
         return 10 if is_leap_year else 11
     if mois == 2:
