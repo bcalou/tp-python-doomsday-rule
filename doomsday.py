@@ -8,10 +8,10 @@ def main():
     corresponding weekday
     """
 
-    print("Bienvenue sur le programme qui vous dit quel jour de la semaine vous êtes né.e!")
+    print("Bienvenue sur le programme qui vous dit le jour de la semaine correspondant à une date!")
     date = input("Entrez une date au format AAAA-MM-JJ: ")
     if is_valid_date(date):
-        print("Vous êtes né.e un", get_day_for_date(date))
+        print("C'est un", get_day_for_date(date))
     else:
         print("La date est invalide.")
 
