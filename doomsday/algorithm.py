@@ -3,10 +3,10 @@ SEMAINE: tuple = ("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi",
 def get_day_for_date(date: str) -> str:
     """Return the day of the week for the given date (format = YYYY-MM-DD)"""
 
-    jour: int = int(date[ :2])
-    mois: int = int(date[3:5])
-    siecle: int = int(date[6:8])
-    annee: int = int(date[8: ])
+    siecle: int = int(date[ :2])
+    annee: int = int(date[3:4])
+    mois: int = int(date[5:7])
+    jour: int = int(date[8: ])
 
     anchor_weekday: int = get_anchor_weekday(get_year_anchor(siecle), annee)
     ancre_mois: int = get_month_anchor(mois, is_leap_year(annee))
