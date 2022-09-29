@@ -50,3 +50,6 @@ def has_year_month_day(date: str) -> bool:
         return False
         
     return True
+
+if __name__ == "__main__":
+    print("Ce fichier n'est pas le script principal. Lancez 'doomsday.py'.")
