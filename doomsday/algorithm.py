@@ -3,19 +3,22 @@ SEMAINE: tuple = ("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi",
 def get_day_for_date(date: str) -> str:
     """Return the day of the week for the given date (format = YYYY-MM-DD)"""
 
-    siecle: int = int(date[ :2])
-    annee: int = int(date[3:4])
-    mois: int = int(date[5:7])
-    jour: int = int(date[8: ])
+    year, month, day = date.split("-")
+    
+    siecle: int = int(year) // 100
+    annee: int = int(year) % 100
+    mois: int = int(month)
+    jour: int = int(day)
 
-    anchor_weekday: int = get_anchor_weekday(get_year_anchor(siecle), annee)
+
+    anchor_weekday: int = get_anchor_weekday(get_year_bonus(siecle), annee)
     ancre_mois: int = get_month_anchor(mois, is_leap_year(annee))
 
     jour_calcule: int = (jour - ancre_mois + anchor_weekday) % 7
 
     return SEMAINE[jour_calcule]
 
-def get_anchor_weekday(year_anchor: int, year: int) -> int:
+def get_anchor_weekday(year_bonus: int, year: int) -> int:
     """Calculates the anchor day for the given year"""
     if year % 2 == 1:
         year += 11
@@ -23,7 +26,7 @@ def get_anchor_weekday(year_anchor: int, year: int) -> int:
     if year % 2 == 1:
         year += 11
 
-    jour_ancre: int = 7 - (year % 7) + year_anchor
+    jour_ancre: int = (7 - (year % 7)) + year_bonus
     return jour_ancre % 7
 
 def get_month_anchor(mois: int,is_leap_year: bool) -> int:
@@ -48,8 +51,8 @@ def is_leap_year(year: int) -> bool:
     """Return whether this year is a leap year"""
     return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
-def get_year_anchor(siecle: int) -> int:
-    """Return the year anchor for the given century"""
+def get_year_bonus(siecle: int) -> int:
+    """Return the number to add for the given century"""
     if siecle % 4 == 0:
         return 2
     if siecle % 4 == 1:
