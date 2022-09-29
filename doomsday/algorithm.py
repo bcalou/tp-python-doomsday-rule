@@ -3,19 +3,19 @@ WEEK: tuple = ("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
 def get_day_for_date(date: str) -> str:
     """Return the day of the week for the given date (format = YYYY-MM-DD)"""
 
-    year, month, day = date.split("-")
+    input_year, input_month, input_day = date.split("-")
     
-    siecle: int = int(year) // 100
-    annee: int = int(year) % 100
-    mois: int = int(month)
-    jour: int = int(day)
+    converted_century: int = int(input_year) // 100
+    converted_year: int = int(input_year) % 100
+    converted_month: int = int(input_month)
+    converted_day: int = int(input_day)
 
 
-    anchor_weekday: int = get_anchor_weekday(get_year_bonus(siecle), annee)
-    month_anchor: int = get_month_anchor(mois, is_leap_year(siecle*100 + annee))
+    anchor_weekday: int = get_anchor_weekday(get_year_bonus(converted_century), converted_year)
+    month_anchor: int = get_month_anchor(converted_month, is_leap_year(converted_century*100 + converted_year))
 
-    jour_calcule: int = (anchor_weekday + (jour - month_anchor)) % 7
-    return WEEK[jour_calcule]
+    computed_day: int = (anchor_weekday + (converted_day - month_anchor)) % 7
+    return WEEK[computed_day]
 
 def get_anchor_weekday(year_bonus: int, year: int) -> int:
     """Calculates the anchor day for the given year"""
@@ -25,40 +25,41 @@ def get_anchor_weekday(year_bonus: int, year: int) -> int:
     if year % 2 == 1:
         year += 11
 
-    jour_ancre: int = (7 - (year % 7)) + year_bonus
-    return jour_ancre % 7
+    anchor_weekday: int = (7 - (year % 7)) + year_bonus
+    return anchor_weekday % 7
 
-def get_month_anchor(mois: int,is_leap_year: bool) -> int:
+def get_month_anchor(month: int,is_leap_year: bool) -> int:
     """Return the month anchor for the given month"""
-    if mois <= 3:
-        return special_month_cases(mois, is_leap_year)
-    if mois == 5 or mois == 9:
-        return 14 - mois # On inverse mai et septembre
-    if mois == 7 or mois == 11:
-        return 18 - mois # On inverse juillet et novembre
-    return mois # Les autres mois correspondent à leur jour ancre
+    if month <= 3:
+        return special_month_cases(month, is_leap_year)
+    if month == 5 or month == 9:
+        return 14 - month # We invert may and september
+    if month == 7 or month == 11:
+        return 18 - month # We invert july and november
+    return month # The other months correspond to their anchor day
 
-def special_month_cases(mois: int, is_leap_year: bool) -> int:
+def special_month_cases(month: int, is_leap_year: bool) -> int:
     """Completes get_month_anchor for special cases (the first 3 months)"""
-    if mois == 1:
+    # Month anchor for January and February change if it's a leap year
+    if month == 1:
         return 11 if is_leap_year else 10
-    if mois == 2:
+    if month == 2:
         return 22 if is_leap_year else 21
-    return 0
+    return 0 # March's anchor day is 0
 
 def is_leap_year(year: int) -> bool:
     """Return whether this year is a leap year"""
     return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
-def get_year_bonus(siecle: int) -> int:
+def get_year_bonus(century: int) -> int:
     """Return the number to add for the given century"""
-    if siecle % 4 == 0:
+    if century % 4 == 0:
         return 2
-    if siecle % 4 == 1:
+    if century % 4 == 1:
         return 0
-    if siecle % 4 == 2:
+    if century % 4 == 2:
         return 5
     return 3
 
 if __name__ == "__main__":
-    print("Ce fichier n'est pas le script principal. Lancez 'doomsday.py'.")
+    print("This file isn't executable. Prefer starting 'doomsday.py'.")
