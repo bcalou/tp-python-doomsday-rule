@@ -68,30 +68,51 @@ def is_valid_month_and_day(month: str, day: str, is_year_bissextile: bool) -> bo
     int_day: int = int(day)
     int_month: int = int(month)
 
-    if 1 > int_month or int_month > 12:
+    if not is_valid_month_and_day(int_month, int_day):
+        return False
+
+    if is_day_valid_in_february(int_month, int_day, is_year_bissextile):
+        return True
+    elif is_day_valid_in_even_month(int_month, int_day):
+        return True
+    elif is_day_valid_in_odd_month(int_month, int_day):
+        return True
+
+    return False
+
+
+def is_day_valid_in_february(month: int, day: int, is_year_bissextile: bool) -> bool:
+    """Test if the day is not too big for february"""
+    return (month == FEBRUARY_NUMBER and
+            ((is_year_bissextile and day <= 29) or
+             (not is_year_bissextile and day <= 28)))
+
+
+def is_month_valid_and_day_above_1(month: int, day: int) -> bool:
+    """Test if month valid and day above 1"""
+    if 1 > month or month > 12:
         print("Month must be between 1 and 12")
         return False
 
-    if 1 > int_day:
+    if 1 > day:
         print("Day must be positive and above 1")
         return False
 
-    if (int_month == FEBRUARY_NUMBER and
-            ((is_year_bissextile and int_day > 29) or
-             (not is_year_bissextile and int_day > 28))):
-        return False
-
-    if (int_month % 2 == 0 and
-            ((int_month > 7 and int_day > 31)
-             or (int_month < 7 and int_day > 30))):
-        return False
-
-    elif (int_month % 2 == 1 and
-          ((int_month < 8 and int_day > 31) or
-           (int_month > 8 and int_day > 30))):
-        return False
-
     return True
+
+
+def is_day_valid_in_even_month(month: int, day: int) -> bool:
+    """Test if the day is not too big for even month except february"""
+    return (month % 2 == 0 and month != 2 and
+            ((month > 7 and day <= 31)
+             or (month < 7 and day <= 30)))
+
+
+def is_day_valid_in_odd_month(month: int, day: int) -> bool:
+    """Test if the day is not too big for odd month """
+    return (month % 2 == 1 and
+            ((month < 8 and day <= 31) or
+             (month > 8 and day <= 30)))
 
 
 def is_a_number(number_to_test: str, variable_wanted: str) -> bool:
