@@ -1,11 +1,10 @@
 from doomsday.date import is_valid_date
 from doomsday.algorithm import get_day_for_date
 
-# Commencez ici !
 
 # Greeting message
 print("Hello Doomsday !")
-print("Bienvenue sur ’algorithme du jour du jugement dernier !\n")
+print("Bienvenue sur l’algorithme du jour du jugement dernier !\n")
 
 
 is_input_date_valid: bool = False
@@ -20,6 +19,6 @@ while not is_input_date_valid:
 
 
 # End message
-end_message = f"\n\nLe {date_input} etait ou sera un {get_day_for_date(date_input)} ;)"
+end_message = f"\n\nLe {date_input} etait ou sera : {get_day_for_date(date_input)} 👍"
 
 print(end_message)

@@ -16,9 +16,11 @@ def is_valid_date(date: str) -> bool:
         return error_message("Mois non valide veuillez utiliser le format MM ou M et verifiez que le mois est valide (1 à 12 si vous ne savez pas).")
 
     # Check the validity off the
-    if is_day_valid(splited_date[2], int(splited_date[1]), int(splited_date[0])):
+    if not is_day_valid(splited_date[2], int(splited_date[1]), int(splited_date[0])):
         return error_message("Jour non valide veuillez utiliser le format dd ou d et verifiez que le jour existe dans le mois choisi.")
     return True
+
+# Simple function to display a error message while returning a False bool
 
 
 def error_message(message: str) -> bool:
@@ -26,6 +28,7 @@ def error_message(message: str) -> bool:
     return False
 
 
+# Check if the year fits in the gregorian calendar which begin in the year of our Lord 1583 ;)
 def is_year_valid(year: str):
     return int(year) < 1583
 
@@ -34,6 +37,7 @@ def is_month_valid(month: str):
     return int(month) <= 12 and int(month) >= 1
 
 
+# Check if the day fits in the selected month while checking for leap years
 def is_day_valid(day_text: str, month: int, year: int) -> bool:
 
     USUSAL_DAYS_PER_MONTH: list[int] = [
@@ -45,11 +49,10 @@ def is_day_valid(day_text: str, month: int, year: int) -> bool:
 
     # Check for february and leap year case
     day = int(day_text)
-
     if is_leap_year(year) and month == 2 and (day <= 29 or day >= 1):
         return True
 
-    # Check for casual cases
+    # Check for usual cases
     return day <= USUSAL_DAYS_PER_MONTH[month - 1] and day > 1
 
 
