@@ -6,14 +6,17 @@ global day; day: int = 0
 
 
 def is_valid_date(date: str) -> bool:
-    """Checking if entered string format is correct and if the date exists"""
+    """
+    Checking if entered string format is correct, if year >= 1583
+    and if the date exists.
+    """
+
     reset_global_variables()
 
     if not is_string_format_correct(date):
         return False
     else:
         parse_string_date_to_variables()
-        #store_values_from_date_list_in_variables()
     
     if not does_year_exists(year):
         return False
@@ -24,15 +27,15 @@ def is_valid_date(date: str) -> bool:
     if not does_day_exists(day):
         return False
     
-    #reset_global_variables()
     return True
 
 
+def is_string_format_correct(given_string: str) -> bool:
+    """Checking if the string given by the user fits the requested format."""
 
-def is_string_format_correct(input: str) -> bool:
     dash_quantity_in_input_string: int = 0
 
-    for character in input:
+    for character in given_string:
         if character == "-":
             dash_quantity_in_input_string += 1
     
@@ -41,7 +44,7 @@ def is_string_format_correct(input: str) -> bool:
         return False
     
     global str_date_list
-    str_date_list = input.split('-')
+    str_date_list = given_string.split('-')
     local_year: str = str_date_list[0]
     local_month: str = str_date_list[1]
     local_day: str = str_date_list[2]
@@ -61,7 +64,6 @@ def is_string_format_correct(input: str) -> bool:
     return True
 
 
-
 def parse_string_date_to_variables():
     global int_date_list
     global year, month, day
@@ -74,24 +76,12 @@ def parse_string_date_to_variables():
     day = int_date_list[2]
 
 
-
-"""
-def store_values_from_date_list_in_variables():
-    global year, month, day
-    year = int_date_list[0]
-    month = int_date_list[1]
-    day = int_date_list[2]
-"""
-
-
-
 def does_year_exists(given_year: int) -> bool:
     if given_year >= 1583:
         return True
     else:
         print("Please enter a year after 1583")
         return False
-
 
 
 def does_month_exists(given_month: int) -> bool:
@@ -102,8 +92,9 @@ def does_month_exists(given_month: int) -> bool:
         return False
 
 
-
 def does_day_exists(given_day: int) -> bool:
+    """Checking if the day exists in the specified month."""
+
     MONTHS_WITH_30_DAYS: list[int] = [4, 6, 9, 11]
     MONTHS_WITH_31_DAYS: list[int] = [1, 3, 5, 7, 8, 10, 12]
     
@@ -114,7 +105,7 @@ def does_day_exists(given_day: int) -> bool:
         print("This day doesn't exist in this month")
         return False
     
-    if (
+    elif (
         month == 2 and
         ((is_leap_year(year) and not 0 < given_day <= 29) or
         (not is_leap_year(year) and not 0 < given_day <= 28))
@@ -125,13 +116,13 @@ def does_day_exists(given_day: int) -> bool:
     return True
 
 
-
 def is_leap_year(given_year: int) -> bool:
-    """Check is year is leap or not.
+    """
+    Checking whether the year is leap or not.
     See https://www.mathsisfun.com/leap-years.html for calculation rules.
     """
-    return (given_year % 4 == 0 and not given_year % 100 == 0) or (given_year % 400 == 0)
 
+    return (given_year % 4 == 0 and not given_year % 100 == 0) or (given_year % 400 == 0)
 
 
 def reset_global_variables():
@@ -163,8 +154,6 @@ QUESTIONS
 Noms des variables ok avec préfixe local_ dans is_string_format_correct() ?
 
 Convention respectée pour les if avec des retours à la ligne ?
-
-2 lignes vides entre chaque def de fonction ? Actuellement 3
 
 
 -----

@@ -1,27 +1,36 @@
 from doomsday.date import is_leap_year
 
-WEEKDAYS: list[str] = (
-    ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-)
-
 global date_list; date_list: list[int] = []
 global year; year: int = 0
 global month; month: int = 0
 global day; day: int = 0
 
+
 def get_day_for_date(date: str) -> str:
+    """
+    Calculates and returns the weekday for a given date. See 
+    https://en.wikipedia.org/wiki/Doomsday_rule to get the different steps of
+    the process.
+    """
+
+    WEEKDAYS: list[str] = (
+    ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    )
+
     reset_global_variables()
     parse_string_date_to_variables(date)
     anchor_day_index: int =(get_anchor_day_index(year))
 
-    months_doomsdays: list[int] = [0, 999, 999, 7, 4, 9, 6, 11, 8, 5, 10, 7, 12]
+    # Doomsdays list for each month. list[0] is unused, list[1,2] for January
+    # and February are set afterwards according whether the year is leap or not. 
+    months_doomsdays: list[int] = [999, 0, 0, 7, 4, 9, 6, 11, 8, 5, 10, 7, 12]
 
     if is_leap_year(year):
-        months_doomsdays[1] = 11
-        months_doomsdays[2] = 22
+        months_doomsdays[1] = 11 # January the 11th if year is leap
+        months_doomsdays[2] = 22 # February the 22nd if year is leap
     else:
-        months_doomsdays[1] = 10
-        months_doomsdays[2] = 21
+        months_doomsdays[1] = 10 # January the 10th if not
+        months_doomsdays[2] = 21 # Fabruary the 21st if not
     
     gap_between_day_to_test_and_month_doomsday: int = (
         (day - months_doomsdays[month]) % 7
@@ -40,6 +49,8 @@ def reset_global_variables():
 
 
 def parse_string_date_to_variables(date: str):
+    """Parse the string given by the user and store datas in variables"""
+
     global date_list
     global year, month, day
     str_date_list: list[str] = date.split('-')
@@ -53,6 +64,13 @@ def parse_string_date_to_variables(date: str):
 
 
 def get_anchor_day_index(given_year: int) -> int:
+    """
+    This function calculates the anchor day for the given year and returns
+    its index.
+    See https://en.wikipedia.org/wiki/Doomsday_rule#The_%22odd_+_11%22_method
+    for the calculation process.
+    """
+
     CENTURY_ANCHORS: list[int] = [2, 0, 5, 3]
     century_digits: int = int(str(given_year)[:2])
     year_of_century: int = int(str(given_year)[2:])
@@ -99,7 +117,7 @@ redondantes avec certaines dans date.py
 Variables globales redondantes également entre les fichiers, possible de les partager ?
 
 Import en début de fichier : from doomsday.date import is_leap_year
-besoin de préciser doomsdday.date si fonction appelée depuis le fichier doomsday.py,
+besoin de préciser doomsday.date si fonction appelée depuis le fichier doomsday.py,
 mais ne fonctionne pas quand fonction appelée depuis ce fichier, besoin de
 from date import is_leap_year
 
@@ -107,7 +125,6 @@ from date import is_leap_year
 -----
 TO DO
 -----
-Commenter tout
 
 Modifs en fonction des réponses aux questions ci-dessus
 
