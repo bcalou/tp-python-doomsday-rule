@@ -9,6 +9,7 @@ if get_day_for_date("2022-01-01") != "Saturday":
 if get_day_for_date("2002-03-19") != "Tuesday":
     print(get_day_for_date("2002-03-19") +
           '\033[91m❌ Date for 2021-01-31 should be Tuesday\033[0;0m')
+
 ################################################################
 
 if get_day_for_date("2021-01-31") != "Sunday":
