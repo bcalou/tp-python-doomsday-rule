@@ -51,6 +51,7 @@ def find_pivot(year:int, mounth:int) -> int:
             return 7
     
 def century_tag(split_centuary:int) -> int:
+    """"""
     if split_centuary % 4 == 0:
         return 2
     if split_centuary % 4 == 1:
