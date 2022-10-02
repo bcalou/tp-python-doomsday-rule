@@ -5,8 +5,10 @@ def get_day_for_date(date: str) -> str:
     year:str = split_date[0]
     mounth:int = int(split_date[1])
     day:int = int(split_date[2])
+
     pivot:int = find_pivot(int(year),mounth)
     pivot_day:float = day_for_year(int(year[2:]),int(year[:2]))
+    
     result:float = day - pivot
     result = (pivot_day + (result % 7)) % 7
     if result == 0 :
@@ -28,6 +30,7 @@ def get_day_for_date(date: str) -> str:
 
 
 def find_pivot(year:int, mounth:int) -> int:
+    #Fonction retournant le jour pivot du mois inséré
     if mounth == 1 and is_leap_year(str(year)):
         return 11
     elif mounth == 1 and not is_leap_year(str(year)):
@@ -37,7 +40,7 @@ def find_pivot(year:int, mounth:int) -> int:
     elif mounth == 2 and not is_leap_year(str(year)):
         return 21
     else:
-        if mounth%2 == 0:
+        if mounth % 2 == 0:
             return mounth
         elif mounth == 3:
             return 0
@@ -51,7 +54,7 @@ def find_pivot(year:int, mounth:int) -> int:
             return 7
     
 def century_tag(split_centuary:int) -> int:
-    """"""
+    #Fonction retournant la balise du siècle inséré
     if split_centuary % 4 == 0:
         return 2
     if split_centuary % 4 == 1:
@@ -62,6 +65,7 @@ def century_tag(split_centuary:int) -> int:
         return 3
 
 def day_for_year(split_year:float,split_centuary:int) -> float :
+    #Calcule du jour de la semaine correspondant à la balise du siècle
     if not split_year % 2 == 0:
         split_year += 11
     split_year = split_year/2

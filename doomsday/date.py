@@ -1,10 +1,13 @@
 def is_valid_date(date_input: str) -> bool:
+    
+    #Je vérifie que la date ne soit pas trop courte
     if not 8<=len(date_input) :
         print("Erreur: La date ne correspond pas au format demandé.")
         return False
-
+    #Je sépare la date pour pouvoir l'exploiter
     split_date: list[str] = date_input.split('-')
 
+    #Je vérifie que la date est bien sous forme décimale
     for part_date in split_date:
         if not part_date.isdecimal():
             print("Erreur: la date n'est pas écrite en décimale.")
@@ -38,12 +41,11 @@ def is_valid_date(date_input: str) -> bool:
                 if not ( 1 <= int(split_date[2]) <= 30):
                     print("Erreur: le jour n'existe pas.")
                     return False
-    date = split_date
     return True
         
             
 def is_31_days_mounth(mounth_tested:str)-> bool:
-    """Fonction de vérification du nombre total de jour dans un mois"""
+    #Fonction de vérification du nombre total de jour dans un mois
     if (int(mounth_tested) == 1 or int(mounth_tested) == 3
         or int(mounth_tested) == 5 or int(mounth_tested) == 7
         or int(mounth_tested) == 8 or int(mounth_tested) == 10
@@ -54,7 +56,7 @@ def is_31_days_mounth(mounth_tested:str)-> bool:
 
 
 def is_leap_year(year_tested:str) -> bool:
-    """Fonction de vérification d'une année bisextile"""
+    #Fonction de vérification d'une année bisextile
     if (int(year_tested)%400==0):
         return True
     elif not (int(year_tested)%100==0) and (int(year_tested)%4==0):
