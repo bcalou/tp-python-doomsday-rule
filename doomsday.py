@@ -1,5 +1,8 @@
 from doomsday.date import is_valid_date
 from doomsday.algorithm import get_day_for_date
+import doomsday.utils as utils
+
+utils.init_global_variables()
 
 print("-----------------------------------------------------------------------")
 print("          Welcome to the most ass kickin' doomsday calculator")
