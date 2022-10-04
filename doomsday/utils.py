@@ -1,3 +1,8 @@
+"""
+Common utils methods
+"""
+
+
 def is_leap_year(year: int) -> bool:
     """Return true if the given year is a leap year (29 days in february)
 

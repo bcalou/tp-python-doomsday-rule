@@ -1,5 +1,12 @@
+"""
+Date validation methods
+"""
+
 from doomsday.utils import is_leap_year, get_date_parts
-from doomsday.constants import DAYS_PER_MONTH
+from doomsday.constants import (
+    COMMON_YEAR_DAYS_PER_MONTH,
+    LEAP_YEAR_DAYS_PER_MONTH
+)
 
 
 def is_valid_date(date: str) -> bool:
@@ -42,7 +49,7 @@ def is_existing_year(year: int) -> bool:
     """Test if the given year is supported and exists"""
     # Only date after the beginning of the gregorian calendar are supported
     if year < 1583:
-        print("Only year from 1583 on are supported")
+        print("Only years from 1583 on are supported")
         return False
 
     return True
@@ -51,7 +58,7 @@ def is_existing_year(year: int) -> bool:
 def is_existing_month(month: int) -> bool:
     """Test if the given month exists"""
 
-    if not (month >= 1 and month <= 12):
+    if not (1 <= month <= 12):
         print("The month should be between 1 and 12")
         return False
 
@@ -60,15 +67,12 @@ def is_existing_month(month: int) -> bool:
 
 def is_existing_day(year: int, month: int, day: int) -> bool:
     """Test if the given day exists"""
-    # 29 days in february for leap years
-    if month == 2 and is_leap_year(year):
-        number_of_days_in_month = 29
+    days_per_month = (
+        LEAP_YEAR_DAYS_PER_MONTH if is_leap_year(year)
+        else COMMON_YEAR_DAYS_PER_MONTH
+    )
 
-    # Else, just get the number of day for the matching month
-    else:
-        number_of_days_in_month = DAYS_PER_MONTH[month - 1]
-
-    if not (day >= 1 and day <= number_of_days_in_month):
+    if not (1 <= day <= days_per_month[month - 1]):
         print("This day does not exist for this month and year")
         return False
 

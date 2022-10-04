@@ -1,3 +1,8 @@
+"""
+John Conway's Doomsday Algorithm
+This is an implementation of https://en.wikipedia.org/wiki/Doomsday_rule
+"""
+
 from doomsday.utils import is_leap_year, get_date_parts
 from doomsday.constants import (
     DAYS_NAMES,
@@ -9,6 +14,7 @@ from doomsday.constants import (
 
 def get_weekday_for_date(date: str) -> str:
 <<<<<<< HEAD
+<<<<<<< HEAD
     """Use the doomsday algorithm the determine the day of the week"""
 =======
     """Use the doomsday algorithm the determine the weekday
@@ -16,6 +22,9 @@ def get_weekday_for_date(date: str) -> str:
 
     This is an implementation of https://en.wikipedia.org/wiki/Doomsday_rule
     """
+=======
+    """Use the doomsday algorithm the determine the weekday"""
+>>>>>>> c61ad03 (improve correction)
     year, month, day = get_date_parts(date)
 
     # We need two things : the doomsday for this month (day of reference)
@@ -31,8 +40,8 @@ def get_weekday_for_date(date: str) -> str:
 
 def get_month_doomsday(year: int, month: int) -> int:
     """Get the doomsday for the given year and month"""
-    year_doomsdays: list[int] = (
-      LEAP_YEAR_DOOMSDAYS if is_leap_year(year) else COMMON_YEAR_DOOMSDAYS
+    year_doomsdays: tuple[int, ...] = (
+        LEAP_YEAR_DOOMSDAYS if is_leap_year(year) else COMMON_YEAR_DOOMSDAYS
     )
 
     return year_doomsdays[month - 1]
@@ -44,14 +53,14 @@ def get_year_anchor_weekday(year: int) -> int:
     value: int = year % 100
 
     # Add 11 if the result is odd (31 -> 42)
-    if (value % 2 == 1):
+    if is_odd(value):
         value += 11
 
     # Divide by two (42 -> 21)
     value //= 2
 
     # Add 11 if the result is odd (21 -> 32)
-    if (value % 2 == 1):
+    if is_odd(value):
         value += 11
 
     # Keep the difference between the anchor and the next multiple of 7
@@ -91,3 +100,8 @@ def compute_weekday(day: int, doomsday: int, anchor_weekday: int) -> int:
 
     # Keep the result between 0 (sunday) and 6 (saturday)
     return weekday % 7
+
+
+def is_odd(number: int) -> bool:
+    """Return wether the number is odd (cannot be divided by 2)"""
+    return number % 2 == 1

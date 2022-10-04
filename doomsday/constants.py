@@ -1,4 +1,8 @@
-DAYS_NAMES: list[str] = [
+"""
+Constants
+"""
+
+DAYS_NAMES: tuple[str, ...] = (
     "Sunday",
     "Monday",
     "Tuesday",
@@ -6,13 +10,20 @@ DAYS_NAMES: list[str] = [
     "Thursday",
     "Friday",
     "Saturday"
-]
+)
 
-DAYS_PER_MONTH: list[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+COMMON_YEAR_DAYS_PER_MONTH: tuple[int, ...] = (
+    31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+)
 
-CENTURY_ANCHORS: list[int] = [2, 0, 5, 3]
+# Month length are the same for a leap year, except for february
+LEAP_YEAR_DAYS_PER_MONTH: tuple[int, ...] = (
+    (COMMON_YEAR_DAYS_PER_MONTH[0], 29) + COMMON_YEAR_DAYS_PER_MONTH[2:]
+)
 
-COMMON_YEAR_DOOMSDAYS: list[int] = [3, 7, 7, 4, 2, 6, 4, 1, 5, 3, 7, 5]
+CENTURY_ANCHORS: tuple[int, ...] = (2, 0, 5, 3)
 
-# Doomsdays change for the first to month on leap years
-LEAP_YEAR_DOOMSDAYS: list[int] = [4, 1] + COMMON_YEAR_DOOMSDAYS[2:]
+COMMON_YEAR_DOOMSDAYS: tuple[int, ...] = (3, 7, 7, 4, 2, 6, 4, 1, 5, 3, 7, 5)
+
+# Doomsdays change for the first two month on leap years
+LEAP_YEAR_DOOMSDAYS: tuple[int, ...] = (4, 1) + COMMON_YEAR_DOOMSDAYS[2:]
