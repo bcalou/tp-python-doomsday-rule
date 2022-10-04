@@ -1,72 +1,93 @@
 from doomsday.utils import is_leap_year, get_date_parts
-from doomsday.days import DAYS
+from doomsday.constants import (
+    DAYS_NAMES,
+    CENTURY_ANCHORS,
+    COMMON_YEAR_DOOMSDAYS,
+    LEAP_YEAR_DOOMSDAYS
+)
 
 
 def get_weekday_for_date(date: str) -> str:
+<<<<<<< HEAD
     """Use the doomsday algorithm the determine the day of the week"""
+=======
+    """Use the doomsday algorithm the determine the weekday
+>>>>>>> 058abb5 (update correction)
 
+    This is an implementation of https://en.wikipedia.org/wiki/Doomsday_rule
+    """
     year, month, day = get_date_parts(date)
 
-    # Compute the day of the week with the doomsday method
-    anchor: int = get_year_anchor_day(year)
-    doomsday: int = get_doomsday_for_month(year, month)
-    day_of_week: int = get_day_of_week(day, anchor, doomsday)
+    # We need two things : the doomsday for this month (day of reference)
+    # and the year's anchor weekday (what weekday will be the day of reference)
+    doomsday: int = get_month_doomsday(year, month)
+    anchor_weekday: int = get_year_anchor_weekday(year)
 
-    return DAYS[day_of_week]
+    # Make the final computation
+    weekday = compute_weekday(day, doomsday, anchor_weekday)
+
+    return DAYS_NAMES[weekday]
 
 
-def get_century_anchor(year: int) -> int:
-    """Get the anchor (from 0 = sunday to 6 = saturday) for this century"""
+def get_month_doomsday(year: int, month: int) -> int:
+    """Get the doomsday for the given year and month"""
+    year_doomsdays: list[int] = (
+      LEAP_YEAR_DOOMSDAYS if is_leap_year(year) else COMMON_YEAR_DOOMSDAYS
+    )
+
+    return year_doomsdays[month - 1]
+
+
+def get_year_anchor_weekday(year: int) -> int:
+    """Get the anchor (from 0 = sunday to 6 = saturday) for this year"""
+    # Keep only the last two digits (1931 -> 31)
+    value: int = year % 100
+
+    # Add 11 if the result is odd (31 -> 42)
+    if (value % 2 == 1):
+        value += 11
+
+    # Divide by two (42 -> 21)
+    value //= 2
+
+    # Add 11 if the result is odd (21 -> 32)
+    if (value % 2 == 1):
+        value += 11
+
+    # Keep the difference between the anchor and the next multiple of 7
+    # Exemple : for 32, the next multiple of 7 is 35 so the difference is 3.
+    # 7 - (32 % 7) = 3
+    value = 7 - (value % 7)
+
+    # Add the century anchor weekday
+    value += get_century_anchor_weekday(year)
+
+    # Keep the value between 0 (sunday) and 6 (saturday)
+    return value % 7
+
+
+def get_century_anchor_weekday(year: int) -> int:
+    """Get the anchor weekday for this year's century"""
     # Keep the first two digits of the year to get the century (1931 -> 19)
     century: int = int(str(year)[:2])
 
     # The gregorian calendar repeats itself every 4 centuries (19 -> 3)
-    century_position_in_cycle = century % 4
+    century_position_in_cycle: int = century % 4
 
-    # Get the correct anchor day (2 = tuesday, ...)
-    # depending of the century position in the cycle
-    return [2, 0, 5, 3][century_position_in_cycle]
-
-
-def get_year_anchor_day(year: int) -> int:
-    """Get the anchor day (from 0 = sunday to 6 = saturday) for this year"""
-    # Keep only the last two digits (1931 -> 31)
-    anchor: int = year % 100
-
-    # Add 11 if the result is odd (31 -> 42)
-    if (anchor % 2 == 1):
-        anchor += 11
-
-    # Divide by two (42 -> 21)
-    anchor //= 2
-
-    # Add 11 if the result is odd (21 -> 32)
-    if (anchor % 2 == 1):
-        anchor += 11
-
-    # Keep the difference between the anchor and the next multiple of 7
-    # Exemple : for 32, the next multiple of 7 is 35 so the difference is 3
-    # 7 - (32 % 7) = 3
-    anchor = 7 - (anchor % 7)
-
-    # Add the century anchor and use a modulo in case in goes above 7
-    return (anchor + get_century_anchor(year)) % 7
+    # Get the correct anchor day depending of the century position in the cycle
+    return CENTURY_ANCHORS[century_position_in_cycle]
 
 
-def get_doomsday_for_month(year: int, month: int) -> int:
-    """Get the doomsday for the given month and year"""
-    # Special january and february cases for leap years
-    if month <= 2 and is_leap_year(year):
-        return [4, 1][month - 1]
+def compute_weekday(day: int, doomsday: int, anchor_weekday: int) -> int:
+    """Return the final computation (from 0 = sunday to 6 = saturday)
 
-    # Common year doomsdays
-    return [3, 7, 7, 4, 2, 6, 4, 1, 5, 3, 7, 5][month - 1]
-
-
-def get_day_of_week(day: int, anchor: int, doomsday: int) -> int:
-    """Get the day of the week (from 0 = sunday to 6 = saturday) for the given
-    day, using the associated anchor and doomsday
+    Exemple : if the 1st (doomsday) is friday (year anchor weekday),
+    then the 2nd (day to find) is sunday (result)
+    Translates to : if 1 (doomsday) gives 5 (year anchor weekday),
+    then 2 (day to find) gives 6 (result)
+    Translate to : 6 = (2 - 1) + 5
     """
-    # Get the difference between the actual day and the doomsday
-    # Add the anchor and find the matching day with a mod 7 (8 will become 1)
-    return (day - doomsday + anchor) % 7
+    weekday: int = (day - doomsday) + anchor_weekday
+
+    # Keep the result between 0 (sunday) and 6 (saturday)
+    return weekday % 7

@@ -9,7 +9,7 @@ def is_leap_year(year: int) -> bool:
 
 def get_date_parts(date: str) -> tuple[int, int, int]:
     """Separate date parts and return them as a tuple of 3 ints
-    
+
     Input exemple : "1990-02-15"
     Output : (1990, 2, 15)
     """
@@ -20,5 +20,3 @@ def get_date_parts(date: str) -> tuple[int, int, int]:
     day: int = int(date_parts[2])
 
     return (year, month, day)
-
-
