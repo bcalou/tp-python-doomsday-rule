@@ -13,18 +13,10 @@ from doomsday.constants import (
 
 
 def get_weekday_for_date(date: str) -> str:
-<<<<<<< HEAD
-<<<<<<< HEAD
-    """Use the doomsday algorithm the determine the day of the week"""
-=======
     """Use the doomsday algorithm the determine the weekday
->>>>>>> 058abb5 (update correction)
 
     This is an implementation of https://en.wikipedia.org/wiki/Doomsday_rule
     """
-=======
-    """Use the doomsday algorithm the determine the weekday"""
->>>>>>> c61ad03 (improve correction)
     year, month, day = get_date_parts(date)
 
     # We need two things : the doomsday for this month (day of reference)
@@ -63,16 +55,23 @@ def get_year_anchor_weekday(year: int) -> int:
     if is_odd(value):
         value += 11
 
-    # Keep the difference between the anchor and the next multiple of 7
-    # Exemple : for 32, the next multiple of 7 is 35 so the difference is 3.
-    # 7 - (32 % 7) = 3
-    value = 7 - (value % 7)
+    # Get the difference with the next multiple of 7 (32 -> 3)
+    value = get_difference_with_next_multiple_of_7(value)
 
     # Add the century anchor weekday
     value += get_century_anchor_weekday(year)
 
     # Keep the value between 0 (sunday) and 6 (saturday)
     return value % 7
+
+
+def get_difference_with_next_multiple_of_7(value: int) -> int:
+    """Keep the difference between the anchor and the next multiple of 7
+
+    Exemple : for 32, the next multiple of 7 is 35 so the difference is 3.
+    3 = 7 - (32 % 7)
+    """
+    return 7 - (value % 7)
 
 
 def get_century_anchor_weekday(year: int) -> int:

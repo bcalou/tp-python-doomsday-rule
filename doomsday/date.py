@@ -27,7 +27,7 @@ def is_date_format_correct(date: str) -> bool:
     year, month, day = date_parts
 
     # Remove the dashes and check that only numbers remain
-    if not (year.isnumeric() and month.isnumeric() and day.isnumeric()):
+    if not (year.isdecimal() and month.isdecimal() and day.isdecimal()):
         print("The date should be composed of numbers only")
         return False
 
