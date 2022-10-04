@@ -1,2 +1,2 @@
-def get_day_for_date(date: str) -> str:
+def get_weekday_for_date(date: str) -> str:
     return "Monday"
