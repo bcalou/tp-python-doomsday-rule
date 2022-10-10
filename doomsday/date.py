@@ -13,14 +13,11 @@ def is_valid_date(date: str) -> bool:
 
     year, month, day, *trash = date.split('-')
 
-    if not (
+    return (
         len(trash) == 0
         and is_digit_date(day, month, year)
         and is_date_possible(int(day), int(month), int(year))
-    ):
-        return False
-
-    return True
+    )
 
 
 def is_leap_year(year: int) -> bool:
