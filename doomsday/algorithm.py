@@ -19,15 +19,15 @@ def get_day_for_date(date: str) -> str:
 def get_day_for_date_index(day: int, month: int, year: int) -> int:
     COMMON_DOOMDAYS: list[int] = [10, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
 
-    day_for_day_index: int = get_pivot_day(
+    day_for_date: int = get_pivot_day(
         year) + (day - COMMON_DOOMDAYS[month - 1])
 
     # During january and february of leap years the common doomsday are one day after so since we remove the dooms day we need to remove on to the index
     if is_leap_year(year) and month <= 2:
-        day_for_day_index -= 1
+        day_for_date -= 1
 
     # Clamp the returned value to week indexes
-    return day_for_day_index % 7
+    return day_for_date % 7
 
 
 # Calculate the pivot day
