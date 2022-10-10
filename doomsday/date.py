@@ -12,14 +12,13 @@ def is_valid_date(date: str) -> bool:
     if not date_as_list:
         return False
 
-    year: str = date_as_list[0]
-    month: str = date_as_list[1]
-    day: str = date_as_list[2]
+    year, month, day = date_as_list
+   
 
-    if (not is_valid_year(year) and
-            not is_valid_month_and_day(month, day, find_if_is_bissextile(int(year)))):
+    if not is_valid_year(year):
         return False
-
+    if not is_valid_month_and_day(month, day, find_if_is_bissextile(int(year))):
+        return False
     return True
 
 
@@ -68,7 +67,7 @@ def is_valid_month_and_day(month: str, day: str, is_year_bissextile: bool) -> bo
     int_day: int = int(day)
     int_month: int = int(month)
 
-    if not is_valid_month_and_day(int_month, int_day):
+    if not is_month_valid_and_day_above_1(int_month, int_day):
         return False
 
     if is_day_valid_in_february(int_month, int_day, is_year_bissextile):
