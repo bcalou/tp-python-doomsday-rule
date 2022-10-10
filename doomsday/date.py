@@ -1,3 +1,5 @@
+"""Multiple functions that allows for date validity testing
+"""
 
 def is_valid_date(date: str) -> bool:
     """Check if a date is valid"""
@@ -17,7 +19,7 @@ def is_valid_date(date: str) -> bool:
         and is_date_possible(int(day), int(month), int(year))
     ):
         return False
-    
+
     return True
 
 
@@ -29,7 +31,7 @@ def is_digit_date(day: str, month: str, year: str) -> bool:
     """Returns wether the date is composed of digits"""
     if day.isdigit() and month.isdigit() and year.isdigit():
         return True
-    
+
     print("DateError : The date should be composed of digits separated by dashes.")
     return False
 
@@ -37,9 +39,9 @@ def is_date_possible(day: int, month: int, year: int) -> bool:
     """Returns wether the date can exist"""
     days_per_month: list[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-    if(is_leap_year(year)):
+    if is_leap_year(year):
         days_per_month[1] = 29
-    
+
     if 1 <= month <= 12 and year >= 1583 and 1 <= day <= days_per_month[month - 1]:
         return True
 
@@ -51,7 +53,7 @@ def has_year_month_day(date: str) -> bool:
     if len(date.split('-')) != 3:
         print("DateError : The date should respect the format YYYY-MM-DD.")
         return False
-        
+
     return True
 
 if __name__ == "__main__":
