@@ -1,12 +1,6 @@
-"""
-Date validation methods
-"""
-
-from doomsday.utils import is_leap_year, get_date_parts
-from doomsday.constants import (
-    COMMON_YEAR_DAYS_PER_MONTH,
-    LEAP_YEAR_DAYS_PER_MONTH
-)
+from doomsday.constants import (DAYS_PER_MONTH_COMMON_YEAR,
+                                DAYS_PER_MONTH_LEAP_YEAR)
+from doomsday.utils import get_date_parts, is_leap_year
 
 
 def is_valid_date(date: str) -> bool:
@@ -17,16 +11,16 @@ def is_valid_date(date: str) -> bool:
 def is_date_format_correct(date: str) -> bool:
     """Test if the given date follow the YYYY-MM-dd format"""
     # "1990-02-15".split('-') -> ["1990", "02", "15"]
-    date_parts: list[str] = date.split('-')
+    date_parts = date.split('-')
 
-    # Check we have three elements
+    # Check that we have three elements
     if len(date_parts) != 3:
         print("The date must be composed of three parts separated by a dash")
         return False
 
     year, month, day = date_parts
 
-    # Remove the dashes and check that only numbers remain
+    # Check that only numbers remain
     if not (year.isdecimal() and month.isdecimal() and day.isdecimal()):
         print("The date should be composed of numbers only")
         return False
@@ -46,8 +40,7 @@ def is_existing_date(date: str) -> bool:
 
 
 def is_existing_year(year: int) -> bool:
-    """Test if the given year is supported and exists"""
-    # Only date after the beginning of the gregorian calendar are supported
+    """Test if the given year is supported"""
     if year < 1583:
         print("Only years from 1583 on are supported")
         return False
@@ -68,8 +61,8 @@ def is_existing_month(month: int) -> bool:
 def is_existing_day(year: int, month: int, day: int) -> bool:
     """Test if the given day exists"""
     days_per_month = (
-        LEAP_YEAR_DAYS_PER_MONTH if is_leap_year(year)
-        else COMMON_YEAR_DAYS_PER_MONTH
+        DAYS_PER_MONTH_LEAP_YEAR if is_leap_year(year)
+        else DAYS_PER_MONTH_COMMON_YEAR
     )
 
     if not (1 <= day <= days_per_month[month - 1]):
