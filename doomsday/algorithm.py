@@ -1,6 +1,24 @@
-from doomsday.constants import (CENTURY_ANCHOR_WEEKDAYS, DAYS_NAMES,
-                                DOOMSDAYS_COMMON_YEAR, DOOMSDAYS_LEAP_YEAR)
-from doomsday.utils import get_date_parts, is_leap_year
+from doomsday.date import get_date_parts, is_leap_year
+
+# Human readable day names (sunday is 0)
+DAYS_NAMES = (
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+)
+
+# A loop of 4 numbers starting from the 17th century
+CENTURY_ANCHOR_WEEKDAYS = (2, 0, 5, 3)
+
+# List of doomsday for each month of a common year
+DOOMSDAYS_COMMON_YEAR = (3, 7, 7, 4, 2, 6, 4, 1, 5, 3, 7, 5)
+
+# Doomsdays change for the first two months on leap years
+DOOMSDAYS_LEAP_YEAR = (4, 1) + DOOMSDAYS_COMMON_YEAR[2:]
 
 
 def get_weekday_for_date(date: str) -> str:

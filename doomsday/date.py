@@ -1,6 +1,10 @@
-from doomsday.constants import (DAYS_PER_MONTH_COMMON_YEAR,
-                                DAYS_PER_MONTH_LEAP_YEAR)
-from doomsday.utils import get_date_parts, is_leap_year
+# Number of days per month for a common year
+DAYS_PER_MONTH_COMMON_YEAR = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+# Month length are the same for a leap year, except for february
+DAYS_PER_MONTH_LEAP_YEAR = (
+    (DAYS_PER_MONTH_COMMON_YEAR[0], 29) + DAYS_PER_MONTH_COMMON_YEAR[2:]
+)
 
 
 def is_valid_date(date: str) -> bool:
@@ -39,6 +43,17 @@ def is_existing_date(date: str) -> bool:
     )
 
 
+def get_date_parts(date: str) -> tuple[int, int, int]:
+    """Separate date parts and return them as a tuple of 3 ints
+
+    Input exemple : "1990-02-15"
+    Output : (1990, 2, 15)
+    """
+    date_parts = tuple(date.split('-'))
+
+    return (int(date_parts[0]), int(date_parts[1]), int(date_parts[2]))
+
+
 def is_existing_year(year: int) -> bool:
     """Test if the given year is supported"""
     if year < 1583:
@@ -70,3 +85,12 @@ def is_existing_day(year: int, month: int, day: int) -> bool:
         return False
 
     return True
+
+
+def is_leap_year(year: int) -> bool:
+    """Return true if the given year is a leap year (29 days in february)
+
+    There is a leap year every 4 years, except at the start of the century
+    EXCEPT every 400 years: the first year of the century is a leap year too
+    """
+    return (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
