@@ -16,18 +16,18 @@ DAY_NAMES = (
 def get_anchor_day_for_year(year: int) -> int:
     """Returns the anchor day of a given year starting at 0 for Sunday"""
 
-    # The last two digits of the year in order to apply the Odd + 11 algorithm
+    # Apply the Odd + 11 algorithm
     year_digits: int = year % 100
     if (year_digits % 2 == 1):
         year_digits += 11
 
-    year_digits = int(year_digits / 2)
+    year_digits = year_digits // 2
     if (year_digits % 2 == 1):
         year_digits += 11
 
-    multiple_of_7: int = math.ceil(year_digits / 7) * 7
     # Calculate the century offset for the current year
-    century_index: int = int(year / 100) % 4
+    multiple_of_7: int = math.ceil(year_digits / 7) * 7
+    century_index: int = (year // 100) % 4
     century_offset = CENTURY_OFFSETS[century_index]
 
     return multiple_of_7 - year_digits + century_offset
