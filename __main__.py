@@ -10,7 +10,6 @@ def main():
             print("Incorrect date format. Please use this format : YYYY-MM-dd.")
             continue
 
-        # Si toutes les vérifications passent, la date est valide
         print("Date valide : ", user_input)
         break
 
