@@ -35,7 +35,7 @@ def get_year_anchor(year: int) -> int:
 def calculate_doomsday(year: int, month: int, day: int) -> int:
     year_anchor = get_year_anchor(year)
 
-    # Define the Doomsday for each month
+    # Doomsday for each month
     doomsday_month = [3, 0, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12]
 
     # Adjustments for January and February in leap years
