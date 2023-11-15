@@ -52,6 +52,3 @@ def get_anchor_year(year):
     numbers_to_add_by_century_year: list[int] = [2, 0, 5, 3]
 
     return (difference_multiple_of_7 + numbers_to_add_by_century_year[(year // 100) % 4]) % 7
-
-
-print(get_weekday_for_date('2021-02-01'))
