@@ -13,7 +13,7 @@ def get_weekday_for_date(date: str) -> str:
     """Returns the weekday for the given date in the format YYYY-MM-dd."""
     year, month, day = (int(i) for i in date.split('-'))
 
-    anchor_day_index = get_anchor_of_the_year(year)
+    anchor_day_index: int = get_anchor_of_the_year(year)
 
     doomsday_month: list[int] = [3, 7, 7, 4, 2, 6, 4, 1, 5, 3, 7, 5]
 
@@ -22,19 +22,19 @@ def get_weekday_for_date(date: str) -> str:
         doomsday_month[1] = 1
 
     # Calculate the difference between the day and the doomsday of the month
-    difference = day - doomsday_month[month - 1]
+    difference: int = day - doomsday_month[month - 1]
     # Calculate the weekday index by using the anchor day index and the difference
-    weekday_index = (anchor_day_index + difference) % 7
+    weekday_index: int = (anchor_day_index + difference) % 7
 
     return DAYS[weekday_index]
 
 
-def is_leap_year(year: int):
+def is_leap_year(year: int) -> bool:
     """Checks if the given year is a leap year."""
     return year % 400 == 0 or (year % 100 != 0 and year % 4 == 0)
 
 
-def get_anchor_of_the_year(year: int):
+def get_anchor_of_the_year(year: int) -> int:
     """Calculates the anchor day index for the given year."""
     value: int = year % 100
 
