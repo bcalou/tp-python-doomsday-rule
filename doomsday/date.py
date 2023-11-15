@@ -1,7 +1,8 @@
 from datetime import datetime
 
 
-def is_valid_date(date_str) -> bool:
+def is_valid_date(date_str: str) -> bool:
+    """Checks if the given date is valid."""
     try:
         # Try to convert the string to a date object
         date_obj = datetime.strptime(date_str, '%Y-%m-%d')
