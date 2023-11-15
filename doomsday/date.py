@@ -20,7 +20,7 @@ def is_valid_date(date: str) -> bool:
 
     if (not date_exists(year, month, day)):
         return False
-    
+
     # Years below 1583 are not supported.
     if (year < 1583):
         print("For simplicity, years before 1583 are not supported.")
@@ -34,7 +34,7 @@ def date_exists(year: int, month: int, day: int) -> bool:
     Checks whether the given date can be ran into the doomsday algorithm.
     Invalid dates are dates before 1583-01-01.
     """
-    
+
     # Check for valid month
     if (month < 1 or month > 12):
         print("Invalid month")
@@ -44,7 +44,7 @@ def date_exists(year: int, month: int, day: int) -> bool:
     if (day < 1 or day > get_days_per_month(month, year)):
         print("Invalid day number for the given date.")
         return False
-        
+
     return True
 
 

@@ -33,7 +33,6 @@ def get_weekday_for_date(date: str) -> str:
     return DAY_NAMES[final_day_index]
 
 
-
 def get_anchor_day_for_year(year: int) -> int:
     """Returns the anchor day of a given year starting at 0 for Sunday"""
 
