@@ -1,3 +1,6 @@
+import re
+
+
 def is_valid_date(date: str) -> bool:
     """Verify if the date parameter is valid
 
@@ -18,7 +21,9 @@ def is_valid_date(date: str) -> bool:
 
 def is_format_valid(date: str) -> bool:
     """Verify if date follows the format YYYY-MM-DD"""
-    return True
+    format_match = re.fullmatch(r"\d{4}[-]\d{1,2}[-]\d{1,2}", date)
+
+    return format_match is not None
 
 
 def does_date_exist(date: str) -> bool:
