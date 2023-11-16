@@ -1,15 +1,16 @@
-error_code_wrong_format: int = (1)
-error_code_not_number: int = (2)
-error_code_date_not_exist: int = (3)
-error_code_year_before_1583: int = (4)
+ERROR_CODE_WRONG_FORMAT = (1)
+ERROR_CODE_NOT_NUMBER = (2)
+ERROR_CODE_DATE_NOT_EXIST = (3)
+ERROR_CODE_YEAR_BEFORE_1583 = (4)
 
-max_month_last_day: int = (31)
-min_month_last_day: int = (30)
-special_month_last_day: int = (28)
+MAX_MONTH_LAST_DAY = (31)
+MIN_MONTH_LAST_DAY = (30)
+SPECIAL_MONTH_LAST_DAY = (28)
+SPECIAL_MONTH_LAST_LEAD_DAY = (29)
 
-year: int = (0)
-month: int = (1)
-day: int = (2)
+YEAR = (0)
+MONTH = (1)
+DAY = (2)
 
 
 def is_valid_date(date: str) -> bool:
@@ -18,33 +19,32 @@ def is_valid_date(date: str) -> bool:
     date_list: list[str] = date.split('-')
     # Verify the format of the date 'YYYY-MM-DD'
     if (len(date_list) != 3):
-        return List_of_possible_error(error_code_wrong_format, date)
+        return List_of_possible_error(ERROR_CODE_WRONG_FORMAT, date)
 
     # Verify that each part of the date is int
     date_list_int: list[int] = []
     for element in date_list:
         if (not element.isnumeric()):
             return List_of_possible_error(
-                error_code_not_number, date_list[0])
+                ERROR_CODE_NOT_NUMBER, date_list[0])
         date_list_int.append(int(element))
 
     # Verify that the date is possible Month(1-12) Day(1-lastday)
-
-    if (date_list_int[month] < 1 or
-       date_list_int[month] > 12):
+    if (date_list_int[MONTH] < 1 or
+       date_list_int[MONTH] > 12):
         return List_of_possible_error(
-            error_code_date_not_exist, date_list[month])
+            ERROR_CODE_DATE_NOT_EXIST, date_list[MONTH])
 
-    if (date_list_int[day] < 1 or
-       date_list_int[day] >
-       Month_last_day(date_list_int[month], date_list_int[year])):
+    if (date_list_int[DAY] < 1 or
+       date_list_int[DAY] >
+       Month_last_day(date_list_int[MONTH], date_list_int[YEAR])):
         return List_of_possible_error(
-            error_code_date_not_exist, date_list[2])
+            ERROR_CODE_DATE_NOT_EXIST, date_list[2])
 
     # Verify that the year of the date is after 1583
-    if (date_list_int[year] < 1583):
+    if (date_list_int[YEAR] < 1583):
         return List_of_possible_error(
-            error_code_year_before_1583, date_list[0])
+            ERROR_CODE_YEAR_BEFORE_1583, date_list[0])
 
     return True
 
@@ -52,23 +52,23 @@ def is_valid_date(date: str) -> bool:
 def List_of_possible_error(error_code: int, error_text: str) -> bool:
     """create an error message with a code and a text"""
 
-    if (error_code == error_code_wrong_format):
+    if (error_code == ERROR_CODE_WRONG_FORMAT):
         print('Erreur, ' +
               error_text +
               ' n est pas un bon format pour une date.' +
               ' Le format demandé est YYYY-MM-DD.')
 
-    if (error_code == error_code_not_number):
+    if (error_code == ERROR_CODE_NOT_NUMBER):
         print('Erreur, ' +
               error_text +
               ' n est pas un nombre.')
 
-    if (error_code == error_code_date_not_exist):
+    if (error_code == ERROR_CODE_DATE_NOT_EXIST):
         print('Erreur, ' +
               error_text +
               ' le mois ou le jour sont incorrects.')
 
-    if (error_code == error_code_year_before_1583):
+    if (error_code == ERROR_CODE_YEAR_BEFORE_1583):
         print('Erreur, ' +
               error_text +
               ' l année ne doit pas etre en dessous de 1583.')
@@ -83,19 +83,20 @@ def Month_last_day(month_number: int, year: int) -> int:
     # Case 31
     if ((month_number % 2 == 1 and month_number <= 7) or
        (month_number % 2 == 0 and month_number >= 8)):
-        return max_month_last_day
+        return MAX_MONTH_LAST_DAY
 
     # Case 28-29
     if (month_number == 2):
-        return leap_year(year)
+        if (get_leap(year)):
+            return SPECIAL_MONTH_LAST_LEAD_DAY
+        return SPECIAL_MONTH_LAST_DAY
 
     # Case 30
-    return min_month_last_day
+    return MIN_MONTH_LAST_DAY
 
 
-def leap_year(year: int) -> int:
-    """return if year if leap or not"""
-
-    if year % 4 == 0 and (not year % 100 == 0 or year % 400 == 0):
-        return 29
-    return 28
+def get_leap(year: int) -> bool:
+    """change the variable if the year is leap"""
+    if year % 4 == 0 and ((not year % 100 == 0) or year % 400 == 0):
+        return True
+    return False
