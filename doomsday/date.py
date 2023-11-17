@@ -71,15 +71,15 @@ def is_valid_date(date: str) -> bool:
     print("Valid date")
     return True
 
-def is_valid_year(date: int) -> bool:
+def is_valid_year(year: int) -> bool:
     """ Retourne 'vrai' si l'année est valide"""
     return True
 
-def is_valid_month(date: int) -> bool:
+def is_valid_month(month: int) -> bool:
     """ Retourne 'vrai' si le mois est valide"""
     return True
 
-def is_valid_day(date: int) -> bool:
+def is_valid_day(day: int) -> bool:
     """ Retourne 'vrai' si le jour est valide"""
     return True
 
