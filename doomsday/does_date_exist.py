@@ -18,7 +18,7 @@ def does_date_exist(date: str) -> bool:
         print("Veuillez saisir au date à partir de 1583-01-01")
         return False
 
-    if not (0 < month < 13):
+    if not (1 <= month <= 12):
         print("Le mois saisit n'est pas valide.")
         return False
 
