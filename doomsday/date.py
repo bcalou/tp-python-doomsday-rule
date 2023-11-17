@@ -17,7 +17,9 @@ def is_valid_date(date_str: str) -> bool:
     # doesn't exist (for example : 2021-18-45), then return False and print
     # an error message
     except ValueError:
-        print("Incorrect date format. Please use the format YYYY-MM-dd.")
+        print(
+            f"Incorrect date {date_str}."
+            " Please use the format YYYY-MM-dd or check if the date exists.")
 
         return False
 

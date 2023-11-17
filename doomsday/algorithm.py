@@ -1,3 +1,5 @@
+from datetime import datetime
+
 WEEKDAYS = (
     'Sunday',
     'Monday',
@@ -16,8 +18,6 @@ def get_weekday_for_date(date_str: str) -> str:
     """
     Returns the day of the week for the given date in the format YYYY-MM-dd.
     """
-    from datetime import datetime
-
     # Convert date to datetime
     date = datetime.strptime(date_str, '%Y-%m-%d')
     # Get the doomsday of the year
@@ -41,17 +41,17 @@ def get_weekday_for_date(date_str: str) -> str:
 
 def get_doomsday_year(year: int) -> int:
     """Gets the doomsday of the year as an integer between 0 and 6"""
-    last_two_numbers_of_year: int = year % 100
+    last_two_digits_of_year: int = year % 100
 
-    if last_two_numbers_of_year % 2 != 0:
-        last_two_numbers_of_year += 11
-    last_two_numbers_of_year //= 2
-    if last_two_numbers_of_year % 2 != 0:
-        last_two_numbers_of_year += 11
+    if last_two_digits_of_year % 2 != 0:
+        last_two_digits_of_year += 11
+    last_two_digits_of_year //= 2
+    if last_two_digits_of_year % 2 != 0:
+        last_two_digits_of_year += 11
 
     # Get the difference between the last two numbers of the year and the
     # closest superior or equal multiple of 7
-    difference_multiple_of_7 = last_two_numbers_of_year % 7
+    difference_multiple_of_7 = last_two_digits_of_year % 7
     if difference_multiple_of_7 != 0:
         difference_multiple_of_7 = 7 - difference_multiple_of_7
 

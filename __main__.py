@@ -8,10 +8,8 @@ def main():
             "Please enter a date using the format YYYY-MM-dd : ")
 
         # Check date input
-        if not is_valid_date(user_input):
-            continue
-
-        break
+        if is_valid_date(user_input):
+            break
 
     print(
         f"{user_input} was a {get_weekday_for_date(user_input)}")
