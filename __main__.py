@@ -90,7 +90,7 @@ def anchor_calc(year: int, month: int, day: int) -> int:
     print("jour ancre du mois : "+ str(month_anchor))
     final_day = last_stage(year_anchor,month_anchor, day)
     print("écart entre le jour de l'utilisateur et le jour ancre : " + str(final_day))
-    final_day = abs(final_day) + year_anchor
+    final_day = -1 * final_day + year_anchor
     if (final_day >= 7):
         final_day = final_day - 7
     print("le jour final est : " +str(final_day))
@@ -187,7 +187,7 @@ def last_stage(year_anchor: int, month_anchor: int, day) -> int:
         while ( final_day <= -7 ):
             final_day += 7
             print(final_day)
-        return final_day * -1
+        return final_day
     else:
         while ( final_day > 0 ):
             final_day -= 7
@@ -262,5 +262,11 @@ def get_day_str(day: int) -> str:
     if (day == 6):
         return "Samedi"
     return ""
+
+def get_doomsday(day: int, day_anchor: int, step: int) -> int:
+    # 
+    if(day % 7 == day_anchor ):
+        return day
+    return 0
      
 main()
