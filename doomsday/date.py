@@ -1,6 +1,8 @@
-import doomsday.date_toolbox as tool
+import doomsday.toolbox as tool
+
 import doomsday.errors as EEEE
-import doomsday.const as const
+
+from doomsday.const import PHALANX_MONTH
 
 def is_valid_date(date: str) -> bool:
     '''
@@ -33,7 +35,7 @@ def is_valid_day(date: list[int]) -> bool:
         if month == 2 :
             is_valid = is_valid_day_case_february(year, day)
 
-        elif month in const.PHALANX_MONTH() :
+        elif month in PHALANX_MONTH() :
             if day < 32 :
 
                 is_valid = True
@@ -49,7 +51,7 @@ def is_valid_day(date: list[int]) -> bool:
     return is_valid
 
 
-def is_valid_day_case_february(year: int, day: int) :
+def is_valid_day_case_february(year: int, day: int) -> bool:
     '''
         Subshit from is_valid_day() checking for february.
     '''

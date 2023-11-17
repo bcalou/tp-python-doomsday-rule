@@ -1,4 +1,4 @@
-import doomsday.const as const
+from doomsday.const import PHALANX_MONTH
 ########################### Date validity ######################################
 
 def wrong_format() :
@@ -36,7 +36,7 @@ def wrong_day(day: int, month: int, is_leap: bool) :
     if month == 2 :
         wrong_day_case_february(day, month, is_leap)
 
-    elif month in const.PHALANX_MONTH() :
+    elif month in PHALANX_MONTH() :
         print("In your case, the day must be between 01 and 31")
 
     else :
