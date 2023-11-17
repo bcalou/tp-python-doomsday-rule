@@ -21,7 +21,9 @@ def is_valid_date(date: str) -> bool:
     day: str = date_in_list[2]
 
     # Si le l'année, le mois et le jour sont valides, retourne Vrai
-    return is_valid_year(year) and is_valid_month(month) and is_valid_day(day, month, year)
+    return is_valid_year(year) and is_valid_month(month) and \
+        is_valid_day(day, month, year)
+
 
 def is_valid_year(year: str) -> bool:
     """ Retourne 'vrai' si l'année est valide"""
@@ -42,6 +44,7 @@ def is_valid_year(year: str) -> bool:
 
     return True
 
+
 def is_valid_month(month: str) -> bool:
     """ Retourne 'vrai' si le mois est valide"""
     # Vérifier que le mois soit composé de chiffres
@@ -60,6 +63,7 @@ def is_valid_month(month: str) -> bool:
         return False
 
     return True
+
 
 def is_valid_day(day: str, month: str, year: str) -> bool:
     """ Retourne 'vrai' si le jour est valide"""
@@ -80,15 +84,16 @@ def is_valid_day(day: str, month: str, year: str) -> bool:
     if int(month) == 2 and not is_leap_year(int(year)) and int(day) > 28:
         print("Day must be between 1 and 28")
         return False
-    if int(month)%2 == 1 and int(day) > 31:
+    if int(month) % 2 == 1 and int(day) > 31:
         print("Day must be between 1 and 31")
         return False
-    if int(month)%2 == 0 and int(day) > 30:
+    if int(month) % 2 == 0 and int(day) > 30:
         print("Day must be between 1 and 30")
         return False
 
     return True
 
+
 def is_leap_year(year: int) -> bool:
     """Renvoie 'vrai' si l'année en paramètre est bissextile"""
-    return (year%400 == 0) or (year%4 == 0 and year%100 !=0)
+    return (year % 400 == 0) or (year % 4 == 0 and year % 100 != 0)

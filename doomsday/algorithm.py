@@ -1,5 +1,6 @@
 from doomsday.date import is_leap_year
 
+
 def get_weekday_for_date(date: str) -> str:
     """
     Détermine le jour du jugement dernier à partir d'une date donnée
@@ -18,9 +19,9 @@ def get_weekday_for_date(date: str) -> str:
 
     date_in_list: list[str] = date.split("-")
 
-    year: int =  int(date_in_list[0])
-    month: int =  int(date_in_list[1])
-    day: int =  int(date_in_list[2])
+    year: int = int(date_in_list[0])
+    month: int = int(date_in_list[1])
+    day: int = int(date_in_list[2])
 
     # 1re partie : déterminer le jour "ancre" de l'année
 
@@ -63,12 +64,13 @@ def get_weekday_for_date(date: str) -> str:
         case _:
             return ""
 
+
 def get_anchor_day(year: int) -> int:
     """Détermine le jour 'ancre' d'une année"""
 
-    year_end: float = year % 100 # La fin de l'année
-    century: int = int(year / 100) # Le siècle
-    century_value: int = 0 # Le décalage lié au siècle
+    year_end: float = year % 100  # La fin de l'année
+    century: int = int(year / 100)  # Le siècle
+    century_value: int = 0  # Le décalage lié au siècle
 
     # Si fin d'année pair /2, sinon +11 et /2 puis si toujours impair +11
     if year_end % 2 != 0:
@@ -84,13 +86,13 @@ def get_anchor_day(year: int) -> int:
 
     # Obtenir le décalage du siècle
     match (century % 4):
-        case 0: # Dates 1600, 2000, etc.
+        case 0:  # Dates 1600, 2000, etc.
             century_value = 2
-        case 1: # Dates 1700, 2100, etc.
+        case 1:  # Dates 1700, 2100, etc.
             century_value = 0
-        case 2: # Dates 1800, 2200, etc.
+        case 2:  # Dates 1800, 2200, etc.
             century_value = 5
-        case 3: # Dates 1500, 1900, etc.
+        case 3:  # Dates 1500, 1900, etc.
             century_value = 3
 
     return multiple_of_7 - int(year_end) + century_value
