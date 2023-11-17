@@ -17,7 +17,7 @@ def ask_for_valid_date() -> str:
 
     while True:
         given_date = input("Your date (YYYY-MM-dd):\n")
-        if is_valid_date(given_date) is True:
+        if is_valid_date(given_date):
             return given_date
 
 

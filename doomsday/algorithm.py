@@ -1,3 +1,5 @@
+from doomsday.date import is_leap_year
+
 DAYS = (
      "Sunday",
      "Monday",
@@ -54,12 +56,11 @@ def get_weekday_by_anchor_day(
     """Return the weekday of the given MM-dd
     with the anchor day for the year"""
 
-    is_leap_year: bool = True if year % 4 == 0 and (
-            year % 100 != 0 or year % 400 == 0) else False
+    is_leap_year_value : bool = is_leap_year(year)
 
     doomsdays = [
-        3 if is_leap_year is False else 4,
-        28 if is_leap_year is False else 29,
+        3 if not is_leap_year_value else 4,
+        28 if not is_leap_year_value else 29,
         14, 4, 9, 6, 11, 8, 5, 10, 7, 12
     ]
 
