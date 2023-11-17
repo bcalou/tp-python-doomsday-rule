@@ -1,18 +1,17 @@
-import doomsday.date as date
+from doomsday.date import is_leap, Date_part
 
-WEEK_DAY_STR = ("Sunday", "Monday", "Tuesday", "Wednesday",
-                "Thursday", "Friday", "Saturday")
+WEEKDAY = ("Sunday", "Monday", "Tuesday", "Wednesday",
+           "Thursday", "Friday", "Saturday")
 
-TAB_CHANGE_FOR_CENTURY = (2, 0, 5, 3)
-TAB_ANCHOR_DAY_IN_MONTH = (10, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12)
+CHANGE_FOR_CENTURY = (2, 0, 5, 3)
+ANCHOR_DAY_IN_MONTH = (10, 21, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12)
 
-NUMBER_ADD_IF_ODD = 11
 WEEK_SIZE = 7
 CENTURY = 100
 
-YEAR = 0
+"""YEAR = 0
 MONTH = 1
-DAY = 2
+DAY = 2"""
 
 
 def get_weekday_for_date(date: str) -> str:
@@ -23,11 +22,12 @@ def get_weekday_for_date(date: str) -> str:
     list_date: list[str] = date.split('-')
 
     # We find the anchor day
-    anchor_day_week: int = get_anchor_day(int(list_date[YEAR]))
+    anchor_day_week: int = get_anchor_day(int(list_date[Date_part.YEAR.value]))
 
     # With the month we find the anchor day in the month
     anchor_day_in_date_month = find_anchor_day_in_date_month(
-        int(list_date[MONTH]), int(list_date[YEAR]))
+        int(list_date[Date_part.MONTH.value]),
+        int(list_date[Date_part.YEAR.value]))
 
     # We return the str day in week
     return get_day_in_week(anchor_day_week,
@@ -54,7 +54,7 @@ def get_anchor_day(year: int) -> int:
 
 def add_eleven_if_is_odd(number: int) -> int:
     """We add eleven if number is odd"""
-    return number if number % 2 == 0 else number + NUMBER_ADD_IF_ODD
+    return number if number % 2 == 0 else number + 11
 
 
 def get_difference_near_multiple_of_seven(number: int) -> int:
@@ -72,15 +72,15 @@ def get_multiple_of_seven_above(number: int) -> int:
 
 def add_century_step(number: int, century: int) -> int:
     """we add a number different with the century"""
-    return number+TAB_CHANGE_FOR_CENTURY[(century // CENTURY) %
-                                         len(TAB_CHANGE_FOR_CENTURY)]
+    return number + CHANGE_FOR_CENTURY[(century // CENTURY) %
+                                       len(CHANGE_FOR_CENTURY)]
 
 
 def find_anchor_day_in_date_month(month: int, year: int) -> int:
     """anchor day in month who is in a tab"""
-    if (month < 3 and date.get_leap(year)):
-        return TAB_ANCHOR_DAY_IN_MONTH[month-1] + 1
-    return TAB_ANCHOR_DAY_IN_MONTH[month-1]
+    if (month < 3 and is_leap(year)):
+        return ANCHOR_DAY_IN_MONTH[month-1] + 1
+    return ANCHOR_DAY_IN_MONTH[month-1]
 
 
 def get_difference_in_day(current_day: int, anchor_day: int) -> int:
@@ -91,6 +91,6 @@ def get_difference_in_day(current_day: int, anchor_day: int) -> int:
 def get_day_in_week(anchor_day: int, anchor_day_in_date_month: int,
                     list_date: list[str]) -> str:
     """get_day_in_week translate anchor to day we search with distance"""
-    distance_in_day = get_difference_in_day(int(list_date[DAY]),
-                                            anchor_day_in_date_month)
-    return WEEK_DAY_STR[(anchor_day+distance_in_day) % WEEK_SIZE]
+    distance_in_day = get_difference_in_day(
+        int(list_date[Date_part.DAY.value]), anchor_day_in_date_month)
+    return WEEKDAY[(anchor_day+distance_in_day) % WEEK_SIZE]
