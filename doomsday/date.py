@@ -17,73 +17,83 @@ def is_valid_date(date: str) -> bool:
         print("Please use format YYYY-MM-dd")
         return False
 
-    # Vérifier si la date est composée de chiffres (0-9)
+    year: str = date_in_list[0]
+    month: str = date_in_list[1]
+    day: str = date_in_list[2]
 
-    if not date_in_list[0].isnumeric():
+    # Si le l'année, le mois et le jour sont valides, retourne Vrai
+    if is_valid_year(year) and is_valid_month(month) and is_valid_day(day, month, year):
+        print("Valid date")
+        return True
+    else:
+        return False
+
+def is_valid_year(year: str) -> bool:
+    """ Retourne 'vrai' si l'année est valide"""
+    # Vérifier que l'année soit composée de chiffres
+    if not year.isnumeric():
         print("Year is not numeric format")
         return False
-    if not date_in_list[1].isnumeric():
-        print("Month is not numeric format")
-        return False
-    if not date_in_list[2].isnumeric():
-        print("Day is not numeric format")
-        return False
-
-    year: int =  int(date_in_list[0])
-    month: int =  int(date_in_list[1])
-    day: int =  int(date_in_list[2])
 
     # Vérifier si le nombre de caractère est bon (voir ci-haut)
-    if len(date_in_list[0]) < 4:
+    if len(year) < 4:
         print("Year must have 4 or more characters")
         return False
-    if len(date_in_list[1]) < 0 or len(date_in_list[1]) > 2:
-        print("Month must have 1 or 2 characters")
-        return False
-    if len(date_in_list[2]) < 0 or len(date_in_list[2]) > 2:
-        print("Day must have 1 or 2 characters")
-        return False
 
-    # Vérifier que l'année est postérieure à 1583
-    if year < 1583:
+    # Vérifier que l'année soit postérieure à 1583
+    if year < "1583":
         print("Year must begin after 1583")
         return False
 
+    return True
+
+def is_valid_month(month: str) -> bool:
+    """ Retourne 'vrai' si le mois est valide"""
+    # Vérifier que le mois soit composé de chiffres
+    if not month.isnumeric():
+        print("Year is not numeric format")
+        return False
+
+    # Vérifier si le nombre de caractère est bon (voir ci-haut)
+    if len(month) < 0 or len(month) > 2:
+        print("Month must have 1 or 2 characters")
+        return False
+
     # Vérifier si le mois existe
-    if month > 13:
+    if month > "12":
         print("Month must be between 1 (january) and 12 (december)")
         return False
 
-    # Vérifier si le jour existe
-    if month == 2 and is_leap_year(year) and day > 29:
+    return True
+
+def is_valid_day(day: str, month: str, year: str) -> bool:
+    """ Retourne 'vrai' si le jour est valide"""
+    # Vérifier que le jour soit composé de chiffres
+    if not day.isnumeric():
+        print("Day is not numeric format")
+        return False
+
+    # Vérifier si le nombre de caractère est bon (voir ci-haut)
+    if len(day) < 0 or len(day) > 2:
+        print("Day must have 1 or 2 characters")
+        return False
+
+    # Vérifier que le jour existe
+    if int(month) == 2 and is_leap_year(int(year)) and int(day) > 29:
         print("Day must be between 1 and 29")
         return False
-    if month == 2 and not is_leap_year(year) and day > 28:
+    if int(month) == 2 and not is_leap_year(int(year)) and int(day) > 28:
         print("Day must be between 1 and 28")
         return False
-    if month%2 == 1 and day > 31:
-        print("Day must be between 1 and 32")
-        return False
-    if month%2 == 0 and day > 30:
+    if int(month)%2 == 1 and int(day) > 31:
         print("Day must be between 1 and 31")
         return False
+    if int(month)%2 == 0 and int(day) > 30:
+        print("Day must be between 1 and 30")
+        return False
 
-    print("Valid date")
-    return True
-
-def is_valid_year(year: int) -> bool:
-    """ Retourne 'vrai' si l'année est valide"""
-    return True
-
-def is_valid_month(month: int) -> bool:
-    """ Retourne 'vrai' si le mois est valide"""
-    return True
-
-def is_valid_day(day: int) -> bool:
-    """ Retourne 'vrai' si le jour est valide"""
     return True
 
 def is_leap_year(year: int) -> bool:
     """Renvoie 'vrai' si l'année en paramètre est bissextile"""
-
     return True if (year%400 == 0) or (year%4 == 0 and year%100 !=0) else False

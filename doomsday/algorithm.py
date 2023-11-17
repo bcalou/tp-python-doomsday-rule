@@ -1,3 +1,5 @@
+from doomsday.date import is_leap_year
+
 def get_weekday_for_date(date: str) -> str:
     """
     Détermine le jour du jugement dernier à partir d'une date donnée
@@ -60,11 +62,6 @@ def get_weekday_for_date(date: str) -> str:
             return days_of_week[(day - 5 + anchor_day) % 7]
         case _:
             return ""
-
-def is_leap_year(year: int) -> bool:
-    """Renvoie 'vrai' si l'année en paramètre est bissextile"""
-
-    return True if (year%400 == 0) or (year%4 == 0 and year%100 !=0) else False
 
 def get_anchor_day(year: int) -> int:
     """Détermine le jour 'ancre' d'une année"""
