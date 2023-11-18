@@ -1,12 +1,10 @@
-
-
-def main() -> None: 
+def main(date: str) -> str:
     """fonction principale du TP"""
-    date = str(input("Donner un date au format YYYY-MM-DD \n"))
+    #date = str(input("Donner un date au format YYYY-MM-DD \n"))
     
     if (len(date) != 10):
         print("ERREUR : Le format n'a pas été respecté")
-        return None
+        return ""
     yearStr = str(date[0]+date[1]+date[2]+date[3])
     monthStr = str(date[5]+date[6])
     dayStr = str(date[8]+date[9])
@@ -17,27 +15,22 @@ def main() -> None:
         day = int(dayStr)
     except ValueError:
         print("ERREUR : Nous attendons des chiffres")
-        return None
+        return ""
 
-    can_launch_algo = is_valid_date(date, year, month, day)
+    can_launch_algo = is_valid_date(year, month, day)
     
     if(can_launch_algo):
     
         print("Date Valide ! ")
-        anchor_calc(year, month, day)
+        doomsday = anchor_calc(year, month, day)
+        return doomsday
     
     else:
         
         print("Date invalide, veuillez recommencer")
-        return 
+        return ""
     
-
-    
-    
-    
-    
-    
-def is_valid_date(date :str, year: int, month: int, day: int) -> bool:
+def is_valid_date(year: int, month: int, day: int) -> bool:
     """Permet de savoir si la date ne présente aucune erreur"""
     
     
@@ -72,31 +65,40 @@ def year_is_leap_year(year: int) -> bool:
     else:
         return True
     
-def anchor_calc(year: int, month: int, day: int) -> int:
+def anchor_calc(year: int, month: int, day: int) -> str:
     two_last_numbers_year = str(year)[2]+str(year)[3]
-    print("2 derniers chiffre de l'année : "+two_last_numbers_year)
     anchor = int(two_last_numbers_year)
     anchor = first_stage(anchor)
-    print("premier calcul impair pair : "+str(anchor))
+    # print("premier calcul impair pair : "+str(anchor))
     anchor = seven_multiple(anchor)    
-    print("distance avec le plus grand multipe de 7 : " + str(anchor))
     # donne le jour ancre de l'année
     year_anchor = get_year_anchor(anchor, year)
     if ( year_anchor >= 7 ):
         year_anchor -= 7
     print("jour ancre de l'année : " + str(year_anchor))
     # donne le jour sur lequel tombera le jour ancre en focntion du mois et de l'année 
-    month_anchor = get_month_anchor(year_anchor, month, year)
+    month_anchor = get_month_anchor(month, year)
     print("jour ancre du mois : "+ str(month_anchor))
-    final_day = last_stage(year_anchor,month_anchor, day)
-    print("écart entre le jour de l'utilisateur et le jour ancre : " + str(final_day))
-    final_day = -1 * final_day + year_anchor
-    if (final_day >= 7):
-        final_day = final_day - 7
-    print("le jour final est : " +str(final_day))
-    print_result(year, month, day, (final_day))
+    
+    final_day = get_user_requested_day(year_anchor, month_anchor, day)
             
-    return anchor
+    return get_day_str(final_day)
+
+def get_user_requested_day(year_anchor: int, month_anchor: int, day: int) -> int:
+    # Calcul du Jour de l'Ancre du Mois
+    month_anchor_day = (year_anchor + month_anchor) % 7
+
+    # Calcul de l'Écart de Jours
+    day_difference = day - month_anchor_day
+
+    # Normalisation de l'Écart de Jours
+    user_requested_day = (day_difference % 7 + 7) % 7
+
+    return user_requested_day
+
+
+
+
 
 def first_stage(two_last_numbers: int) -> int:
     # si il est impair
@@ -118,6 +120,7 @@ def seven_multiple(anchor: int) -> int:
     anchor = 7 - anchor % 7
     return anchor
 
+    
 def get_year_anchor(anchor: int, year: int) -> int:
     if(1600 <= year <= 1699 or 2000 <= year <= 2099):
         return anchor + 2
@@ -128,7 +131,9 @@ def get_year_anchor(anchor: int, year: int) -> int:
     else:
         return anchor + 3
     
-def get_month_anchor(anchor: int, month: int, year: int) -> int:
+
+    
+def get_month_anchor(month: int, year: int) -> int:
     is_leap_year = year_is_leap_year(year)
     if (month == 1):
         if (is_leap_year):
@@ -170,48 +175,6 @@ def get_month_anchor(anchor: int, month: int, year: int) -> int:
     else:
         return 12
    
-def last_stage(year_anchor: int, month_anchor: int, day) -> int:
-    """year = jour ancre de l'année month = jour sur lequel tombera le jour
-    ancre en fonction de l'année day = jour demandé par l'utilisateur"""
-    
-    
-    final_day = month_anchor - day # 0 - 18 = -18
-    print("test :")
-    print(final_day)
-    
-    if (0 <= final_day <= 7):
-        return final_day
-    elif ( -7 <= final_day < 0 ):
-        return final_day * -1
-    elif (final_day < 0):
-        while ( final_day <= -7 ):
-            final_day += 7
-            print(final_day)
-        return final_day
-    else:
-        while ( final_day > 0 ):
-            final_day -= 7
-        return final_day
-    
-    #if(month_anchor - day >= 0): # m = 12 d = 16
-    #     if(month_anchor - day <= 7):
-    #         return month_anchor - day
-    #     else:
-    #         while(month_anchor - day >= 7):
-    #             month_anchor = month_anchor - 7
-    #             if ( month_anchor - day <= 7 ):
-    #                 return month_anchor - day
-    # else: # m = 0 d = 2
-    #     if(month_anchor + day <= 7):
-    #         return month_anchor + day
-    #     else:
-    #         while(month_anchor + day >= 7):
-    #             month_anchor = month_anchor + 7
-    #             if ( month_anchor + day <= 7 ):
-    #                 return month_anchor + day
-    
-    
-    return 0 
 
 def print_result(year: int, month: int, day: int, final_day: int):
     print("Le "+ str(day) + " " + get_month_str(month) + " " + str(year) + 
@@ -243,30 +206,45 @@ def get_month_str(month: int) -> str:
         return "Novembre"
     if (month == 12):
         return "Decembre"
-    
     return ""
 
-def get_day_str(day: int) -> str: 
-    if (day == 0):
-        return "Dimanche"
-    if (day == 1):
-        return "Lundi"
-    if (day == 2):
-        return "Mardi"
-    if (day == 3):
-        return "Mercredi"
-    if (day == 4):
-        return "Jeudi"
-    if (day == 5):
-        return "Vendredi"
-    if (day == 6):
-        return "Samedi"
+def get_day_str(day: int) -> str:
+    """permet de convertir notre int en un jour de la semaine"""
+    if day == 0:
+        return "Sunday"
+    if day == 1:
+        return "Monday"
+    if day == 2:
+        return "Tuesday"
+    if day == 3:
+        return "Wednesday"
+    if day == 4:
+        return "Thursday"
+    if day == 5:
+        return "Friday"
+    if day == 6:
+        return "Saturday"
     return ""
 
-def get_doomsday(day: int, day_anchor: int, step: int) -> int:
-    # 
-    if(day % 7 == day_anchor ):
-        return day
+def if_step_negative(step: int) -> int:
+    if step == -1 :
+        return 6
+    if step == -2 :
+        return 5
+    if step == -3 :
+        return 4 
+    if step == -4 :
+        return 3 
+    if step == -5 :
+        return 2 
+    if step == -6 :
+        return 1 
     return 0
-     
-main()
+
+def get_weekday_for_date(date: str) -> str:
+    print(main(date))
+    return main(date)
+
+# get_weekday_for_date("2021-02-20")
+# get_weekday_for_date("2021-03-10")
+get_weekday_for_date("2000-01-10")
