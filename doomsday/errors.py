@@ -9,7 +9,7 @@ def wrong_format() :
 
 def not_numeric_value(value: str) :
     print("******* Error Format *******")
-    print("One of your value is not numeric :")
+    print("One of your value is not numerical :")
     print(f"--> {value} <--")
     print("Try again with only numerical values.")
     print("****************************")

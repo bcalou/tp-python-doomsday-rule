@@ -95,7 +95,7 @@ def is_valid_year(year: int) -> bool:
 
 def is_valid_format(date: str) -> bool:
     '''
-        Says if the date format is valid.
+        Says if the date format is fine.
     '''
 
     split_date = tool.split_date(date)
@@ -113,7 +113,7 @@ def is_valid_format(date: str) -> bool:
 def check_year_month_day(split_date: list[str]) -> bool :
     '''
         Subshit from is_valid_format() helping to tell date format validity for
-        each date part.
+        each date part individually.
     '''
     if (len(split_date[0]) == 0 or                            
         len(split_date[1]) < 1 and len(split_date[1]) > 2 or 

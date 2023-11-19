@@ -4,7 +4,9 @@ from doomsday.toolbox import parse_date_to_ints
 from doomsday.const import DAYS
 
 def get_weekday_for_date(date: str) -> str:
-
+    '''
+        Returns the right day asked from the date (it's magic)
+    '''
     split_date: list[int] = parse_date_to_ints(date)
 
     year: int = split_date[0]

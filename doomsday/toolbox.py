@@ -23,7 +23,9 @@ def parse_date_to_ints(date: str) -> list[int] :
 
 def date_elements_to_ints(split_date: list[str]) -> list[int] :
     '''
-        Return the int side of the force.
+        Return the int side of the force. You'd ask me why did I made two 
+        different functions to get the same result. 
+        AHAHAHAAAAAHHH, behold my tremendous genius (and -1 on my score) !!!
     '''
 
     split_date_int: list[int] = []
