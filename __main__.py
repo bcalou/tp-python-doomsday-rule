@@ -1,5 +1,19 @@
-def main() -> None:
-    print("Hello world")
+from doomsday.algorithm import get_weekday_for_date
+from doomsday.date import is_valid_date
 
 
-main()
+def main():
+    while True:
+        user_input = input(
+            "Please enter a date using the format YYYY-MM-dd : ")
+
+        # Check date input
+        if is_valid_date(user_input):
+            break
+
+    print(
+        f"{user_input} was a {get_weekday_for_date(user_input)}")
+
+
+if __name__ == "__main__":
+    main()
