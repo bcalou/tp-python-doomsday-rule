@@ -32,11 +32,6 @@ def is_valid_year(year: str) -> bool:
         print("Year is not numeric format")
         return False
 
-    # Vérifier si le nombre de caractère est bon (voir ci-haut)
-    if len(year) < 4:
-        print("Year must have 4 or more characters")
-        return False
-
     # Vérifier que l'année soit postérieure à 1583
     if int(year) < 1583:
         print("Year must begin after 1583")
@@ -53,12 +48,12 @@ def is_valid_month(month: str) -> bool:
         return False
 
     # Vérifier si le nombre de caractère est bon (voir ci-haut)
-    if len(month) < 1 or len(month) > 2:
-        print("Month must have 1 or 2 characters")
-        return False
+    # if len(month) < 1 or len(month) > 2:
+    #    print("Month must have 1 or 2 characters")
+    #    return False
 
     # Vérifier si le mois existe
-    if int(month) > 12:
+    if int(month) < 1 and int(month) > 12:
         print("Month must be between 1 (january) and 12 (december)")
         return False
 
