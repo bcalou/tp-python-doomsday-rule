@@ -56,7 +56,7 @@ def get_weekday_by_anchor_day(
     """Return the weekday of the given MM-dd
     with the anchor day for the year"""
 
-    is_leap_year_value : bool = is_leap_year(year)
+    is_leap_year_value: bool = is_leap_year(year)
 
     doomsdays = [
         3 if not is_leap_year_value else 4,

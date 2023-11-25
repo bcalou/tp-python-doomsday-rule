@@ -23,8 +23,7 @@ def is_valid_date(date: str) -> bool:
     days_in_this_month: int = get_days_in_month(year, month)
 
     if (1 > day) or (day > days_in_this_month):
-        print("For this month, day goes from 1 to ",
-              days_in_this_month)
+        print("For this month, day goes from 1 to ", days_in_this_month)
         return False
 
     return True
@@ -54,6 +53,7 @@ def get_days_in_month(year: int, month: int) -> int:
         return 28 if not is_leap_year(year) else 29
 
     return DAYS_PER_MONTH[month-1]
+
 
 def is_leap_year(year: int) -> bool:
     """Verify if a year is a leap year or not"""
